@@ -13,9 +13,9 @@ public:
 private:
 	Shader* m_myShader;
 	unsigned int VBO, VAO;
-	float vertexData[9] = { 0.5, 0.5, 0.0,
-							-0.5, 0.5, 0.0,
-							-0.5, -0.5, 0.0 };
+	float vertexData[18] = { 0.5, 0.5, 0.0, 1.0, 0.0, 0.0,
+							-0.5, 0.5, 0.0, 0.0, 1.0, 0.0,
+							-0.5, -0.5, 0.0, 0.0, 0.0, 1.0 };
 	void makeVAO();
 	void render();
 };
