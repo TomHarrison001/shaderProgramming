@@ -11,7 +11,7 @@ void MyScene::makeVAO() {
 	// Create VBO (Vertex Buffer Object - unsigned ints storing texture, mesh, shader)
 	glCreateBuffers(1, &VBO);
 	// Creates and initialises a buffer object's immutable data store
-	glNamedBufferStorage(VBO, sizeof(float) * 18, vertexData, GL_DYNAMIC_STORAGE_BIT);
+	glNamedBufferStorage(VBO, sizeof(float) * 36, vertexData, GL_DYNAMIC_STORAGE_BIT);
 	// Creates VAO (Vertex Array Object - stores VBOs)
 	glCreateVertexArrays(1, &VAO);
 	// Binds a buffer to a vertex buffer bind point
@@ -32,8 +32,9 @@ void MyScene::update(float dt) {
 }
 void MyScene::render() {
 	m_myShader->use();
+	m_myShader->setFloat("time", sin((float)glfwGetTime()));
 	// Bind a vertex array object
 	glBindVertexArray(VAO);
 	// Render primitives from bound array data
-	glDrawArrays(GL_TRIANGLES, 0, 3);  // GLenummode: GL_TRIANGLES
+	glDrawArrays(GL_TRIANGLES, 0, 6);  // GLenummode: GL_TRIANGLES
 }
