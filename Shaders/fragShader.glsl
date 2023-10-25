@@ -6,5 +6,5 @@ in vec3 vertexColour;
 uniform float time;
 
 void main() {
-    FragColour = vec4(vertexColour * time, 1.0);  // RGBA
+    FragColour = vec4(1.0, 0.7, 0.0, 1.0);  // RGBA - vertexColour * time
 }
