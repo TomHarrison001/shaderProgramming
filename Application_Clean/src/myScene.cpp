@@ -53,10 +53,7 @@ void MyScene::render() {
 	*/
 	if (m_handler->keyHasBeenPressed()) {
 		if (m_handler->isKeyPressed(GLFW_KEY_UP)) {
-			y_pos += 0.1f;
-		}
-		if (m_handler->isKeyPressed(GLFW_KEY_DOWN)) {
-			y_pos -= 0.1f;
+			cubeJump();
 		}
 		if (m_handler->isKeyPressed(GLFW_KEY_RIGHT)) {
 			x_pos += 0.1f;
@@ -65,9 +62,20 @@ void MyScene::render() {
 			x_pos -= 0.1f;
 		}
 	}
+	if (jumping) {
+		y_pos += (25 - jumpFrame) * 0.01f;
+		jumpFrame++;
+		if (jumpFrame == 51)
+			jumping = false;
+	}
 	m_model = glm::translate(m_model, glm::vec3(x_pos, y_pos, 0.0));
 	m_myShader->setMat4("Model", m_model);
 	// draw call
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, vertexData.size(), GL_UNSIGNED_INT, 0);
+}
+void MyScene::cubeJump() {
+	if (jumping) return;
+	jumping = true;
+	jumpFrame = 0;
 }

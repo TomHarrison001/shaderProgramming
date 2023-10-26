@@ -9,8 +9,10 @@ public:
 	void update(float dt) override;
 private:
 	Shader* m_myShader;
-	float x_pos, y_pos;
+	int jumpFrame = 51;
+	float x_pos, y_pos, gravity;
 	unsigned int VBO, VAO, EBO;
+	bool jumping;
 	glm::mat4 m_model, m_view, m_projection;
 	std::vector<float> vertexData = {
 		// back
@@ -52,4 +54,5 @@ private:
 		20, 21, 22, 22, 23, 20 };
 	void makeVAO();
 	void render();
+	void cubeJump();
 };
