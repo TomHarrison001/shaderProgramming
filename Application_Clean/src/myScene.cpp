@@ -40,9 +40,9 @@ void MyScene::render() {
 	m_myShader->setMat4("Projection", m_projection);
 	m_myShader->setMat4("View", m_view);
 	// bind VAO and draw call
+	/*
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, vertexData.size(), GL_UNSIGNED_INT, 0);
-	/*
 	// update model
 	m_model = glm::translate(m_model, glm::vec3((float)sin(glfwGetTime()) * 3.0, (float)cos(glfwGetTime()) * 3.0, 0.0));
 	m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(1.0, 1.0, 0.0));
@@ -51,4 +51,23 @@ void MyScene::render() {
 	// draw call
 	glDrawElements(GL_TRIANGLES, vertexData.size(), GL_UNSIGNED_INT, 0);
 	*/
+	if (m_handler->keyHasBeenPressed()) {
+		if (m_handler->isKeyPressed(GLFW_KEY_UP)) {
+			y_pos += 0.1f;
+		}
+		if (m_handler->isKeyPressed(GLFW_KEY_DOWN)) {
+			y_pos -= 0.1f;
+		}
+		if (m_handler->isKeyPressed(GLFW_KEY_RIGHT)) {
+			x_pos += 0.1f;
+		}
+		if (m_handler->isKeyPressed(GLFW_KEY_LEFT)) {
+			x_pos -= 0.1f;
+		}
+	}
+	m_model = glm::translate(m_model, glm::vec3(x_pos, y_pos, 0.0));
+	m_myShader->setMat4("Model", m_model);
+	// draw call
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, vertexData.size(), GL_UNSIGNED_INT, 0);
 }

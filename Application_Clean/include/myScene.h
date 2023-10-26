@@ -9,6 +9,7 @@ public:
 	void update(float dt) override;
 private:
 	Shader* m_myShader;
+	float x_pos, y_pos;
 	unsigned int VBO, VAO, EBO;
 	glm::mat4 m_model, m_view, m_projection;
 	std::vector<float> vertexData = {
