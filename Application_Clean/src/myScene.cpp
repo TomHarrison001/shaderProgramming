@@ -15,14 +15,14 @@ void MyScene::makeVAO() {
 	glNamedBufferStorage(EBO, sizeof(unsigned int) * indices.size(), indices.data(), GL_DYNAMIC_STORAGE_BIT);
 
 	glCreateVertexArrays(1, &VAO);  // Creates VAO (Vertex Array Object - stores VBOs)
-	glVertexArrayVertexBuffer(VAO, 0, VBO, 0, sizeof(float) * 3);  // Binds a buffer to a vertex buffer bind point (stride: 6)
+	glVertexArrayVertexBuffer(VAO, 0, VBO, 0, sizeof(float) * 6);  // Binds a buffer to a vertex buffer bind point (stride: 6)
 	glVertexArrayElementBuffer(VAO, EBO);
 	glEnableVertexArrayAttrib(VAO, 0);  // Turns on the array in VAO at specified index
-	// glEnableVertexArrayAttrib(VAO, 1);
+	glEnableVertexArrayAttrib(VAO, 1);
 	glVertexArrayAttribFormat(VAO, 0, 3, GL_FLOAT, GL_FALSE, 0);  // Specify the organisation of vertex arrays (normalised: GL_FALSE)
-	// glVertexArrayAttribFormat(VAO, 1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
+	glVertexArrayAttribFormat(VAO, 1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
 	glVertexArrayAttribBinding(VAO, 0, 0);  // assign a vertex attribute to a vertex buffer binding for a vertex array object
-	// glVertexArrayAttribBinding(VAO, 1, 0);
+	glVertexArrayAttribBinding(VAO, 1, 0);
 }
 void MyScene::update(float dt) {
 	m_camera->update(dt);
@@ -39,6 +39,15 @@ void MyScene::render() {
 	m_myShader->setMat4("Model", m_model);
 	m_myShader->setMat4("Projection", m_projection);
 	m_myShader->setMat4("View", m_view);
+
+	m_myShader->setVec3("viewPos", m_camera->getPosition());
+	m_myShader->setVec3("cubeColour", glm::vec3(0.5, 0.0, 0.0));
+	m_myShader->setVec3("lightColour", glm::vec3(1.0, 1.0, 1.0));
+	m_myShader->setVec3("lightDirection", glm::vec3(-1.0, -1.0, -1.0));
+
+	m_myShader->setFloat("ambientFactor", 0.5);
+	m_myShader->setFloat("shine", 64);
+	m_myShader->setFloat("specStrength", 0.9);
 	// bind VAO and draw call
 	/*
 	glBindVertexArray(VAO);
@@ -53,13 +62,16 @@ void MyScene::render() {
 	*/
 	if (m_handler->keyHasBeenPressed()) {
 		if (m_handler->isKeyPressed(GLFW_KEY_UP)) {
-			cubeJump();
+			// cubeJump();
+			m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(1.0, 1.0, 0.0));
 		}
 		if (m_handler->isKeyPressed(GLFW_KEY_RIGHT)) {
-			x_pos += 0.1f;
+			// x_pos += 0.1f;
+			m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(1.0, 0.0, 1.0));
 		}
 		if (m_handler->isKeyPressed(GLFW_KEY_LEFT)) {
-			x_pos -= 0.1f;
+			// x_pos -= 0.1f;
+			m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(0.0, 1.0, 1.0));
 		}
 	}
 	if (jumping) {
