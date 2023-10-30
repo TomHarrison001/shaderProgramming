@@ -10,9 +10,10 @@ public:
 private:
 	Shader* m_myShader;
 	int jumpFrame = 51;
-	float x_pos, y_pos, gravity;
+	float gravity;
 	unsigned int VBO, VAO, EBO;
 	bool jumping;
+	glm::vec3 pos, rot, scale = glm::vec3(1.0, 1.0, 1.0);
 	glm::mat4 m_model, m_view, m_projection;
 	std::vector<float> vertexData = {
 		// back

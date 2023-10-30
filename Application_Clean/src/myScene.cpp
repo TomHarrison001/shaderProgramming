@@ -43,44 +43,37 @@ void MyScene::render() {
 	m_myShader->setVec3("viewPos", m_camera->getPosition());
 	m_myShader->setVec3("cubeColour", glm::vec3(0.5, 0.0, 0.0));
 	m_myShader->setVec3("lightColour", glm::vec3(1.0, 1.0, 1.0));
-	m_myShader->setVec3("lightDirection", glm::vec3(-1.0, -1.0, -1.0));
+	m_myShader->setVec3("lightDirection", glm::vec3(0.0, sin(glfwGetTime() * 5.0), cos(glfwGetTime() * 5.0)));
 
 	m_myShader->setFloat("ambientFactor", 0.5);
 	m_myShader->setFloat("shine", 64);
 	m_myShader->setFloat("specStrength", 0.9);
-	// bind VAO and draw call
-	/*
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, vertexData.size(), GL_UNSIGNED_INT, 0);
-	// update model
-	m_model = glm::translate(m_model, glm::vec3((float)sin(glfwGetTime()) * 3.0, (float)cos(glfwGetTime()) * 3.0, 0.0));
-	m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(1.0, 1.0, 0.0));
-	m_model = glm::scale(m_model, glm::vec3(0.5, 0.5, 0.5));
-	m_myShader->setMat4("Model", m_model);
-	// draw call
-	glDrawElements(GL_TRIANGLES, vertexData.size(), GL_UNSIGNED_INT, 0);
-	*/
+
 	if (m_handler->keyHasBeenPressed()) {
 		if (m_handler->isKeyPressed(GLFW_KEY_UP)) {
 			// cubeJump();
-			m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(1.0, 1.0, 0.0));
+			rot.y++;
 		}
 		if (m_handler->isKeyPressed(GLFW_KEY_RIGHT)) {
 			// x_pos += 0.1f;
-			m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(1.0, 0.0, 1.0));
+			rot.x++;
 		}
 		if (m_handler->isKeyPressed(GLFW_KEY_LEFT)) {
 			// x_pos -= 0.1f;
-			m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(0.0, 1.0, 1.0));
+			rot.z++;
 		}
 	}
 	if (jumping) {
-		y_pos += (25 - jumpFrame) * 0.01f;
+		pos += glm::vec3(0, (25 - jumpFrame) * 0.01f, 0);
 		jumpFrame++;
 		if (jumpFrame == 51)
 			jumping = false;
 	}
-	m_model = glm::translate(m_model, glm::vec3(x_pos, y_pos, 0.0));
+	m_model = glm::translate(m_model, pos);
+	//m_model = glm::rotate(m_model, (float)(glfwGetTime() * 5.0), glm::vec3(0.0, 1.0, 0.0));
+	//m_model = glm::rotate(m_model, 1000.f, rot);
+	m_model = glm::scale(m_model, scale);
+
 	m_myShader->setMat4("Model", m_model);
 	// draw call
 	glBindVertexArray(VAO);
