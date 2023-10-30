@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Shader.h"
+#include "Lights/DirectionalLight.h"
 
 class MyScene : public Scene {
 public:
@@ -9,6 +10,7 @@ public:
 	void update(float dt) override;
 private:
 	Shader* m_myShader;
+	DirectionalLight* m_directionalLight;
 	int jumpFrame = 51;
 	float gravity;
 	unsigned int VBO, VAO, EBO;

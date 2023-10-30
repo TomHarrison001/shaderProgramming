@@ -5,6 +5,8 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_camera = new FirstPersonCamera();
 	m_camera->attachHandler(m_window, m_handler);
 	m_myShader = new Shader("..\\Shaders\\vertShader.glsl", "..\\Shaders\\fragShader.glsl");
+	m_directionalLight = new DirectionalLight(glm::vec3(1.0, 1.0, 1.0), glm::vec3(-1.0, -1.0, -1.0));
+	m_directionalLight->setLightUniforms(m_myShader);
 	makeVAO();
 }
 void MyScene::makeVAO() {
@@ -42,12 +44,8 @@ void MyScene::render() {
 
 	m_myShader->setVec3("viewPos", m_camera->getPosition());
 	m_myShader->setVec3("cubeColour", glm::vec3(0.5, 0.0, 0.0));
-	m_myShader->setVec3("lightColour", glm::vec3(1.0, 1.0, 1.0));
-	m_myShader->setVec3("lightDirection", glm::vec3(0.0, sin(glfwGetTime() * 5.0), cos(glfwGetTime() * 5.0)));
-
-	m_myShader->setFloat("ambientFactor", 0.5);
 	m_myShader->setFloat("shine", 64);
-	m_myShader->setFloat("specStrength", 0.9);
+	m_myShader->setFloat("specStrength", 16);
 
 	if (m_handler->keyHasBeenPressed()) {
 		if (m_handler->isKeyPressed(GLFW_KEY_UP)) {
