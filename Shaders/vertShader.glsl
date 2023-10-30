@@ -11,7 +11,7 @@ out vec3 normal;
 out vec3 posInWS;  // position in world space
 
 void main() {
-    normal = aNorm;
+    normal = mat3(transpose(inverse(Model))) * aNorm;
     vec4 worldSpace = Model * vec4(aPos, 1.0);
     posInWS = worldSpace.xyz;
     gl_Position = Projection * View * worldSpace;
