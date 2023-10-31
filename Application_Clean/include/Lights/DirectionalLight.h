@@ -6,7 +6,7 @@ class DirectionalLight : public Light {
 public:
 	DirectionalLight(glm::vec3 colour, glm::vec3 direction, float ambient = 0.5);
 	~DirectionalLight() {}
-	void setLightUniforms(Shader* shader);
+	void setLightUniforms(Shader* shader) override;
 	void setDirection(glm::vec3& dir) { m_direction = dir; }
 	void setAmbient(float& a) { m_ambientFactor = a; }
 	glm::vec3& getDirection() { return m_direction; }

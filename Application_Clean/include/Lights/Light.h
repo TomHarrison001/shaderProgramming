@@ -7,7 +7,7 @@ class Light {
 public:
 	Light(glm::vec3 colour) : m_colour(colour) {}
 	~Light() {}
-	virtual void setLightUniforms() {}
+	virtual void setLightUniforms(Shader* shader) {}
 protected:
 	glm::vec3& getColour() { return m_colour; }
 	void setColour(glm::vec3 colour) { m_colour = colour; }
