@@ -22,7 +22,7 @@ public:
 	void translate(glm::vec3 translation) { m_transform = glm::translate(m_transform, translation); }
 	void rotate(float angle, glm::vec3 axis) { m_transform = glm::rotate(m_transform, angle, axis); }
 	void scale(float scaleFactor, glm::vec3 axis) { m_transform = glm::scale(m_transform, scaleFactor * axis); }
-private:
+protected:
 	void makeVAO();
 	unsigned int m_VBO, m_VAO, m_EBO;
 	glm::mat4 m_transform;

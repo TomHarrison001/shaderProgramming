@@ -41,7 +41,7 @@ struct pointLight {
 };
 
 #define numPL 1
-uniform pointLight[numPL];
+uniform pointLight[numPL] pointLights;
 
 void main() {
     vec3 result = getDirectionalLight();
@@ -75,14 +75,14 @@ vec3 getPointLight() {
 
     // ambient
     vec3 ambient = cubeColour * plightColour * ambientFactor;
-
+    
     // diffuse
-    float diffuseFactor = dot(n, -lightDirection);
+    float diffuseFactor = dot(n, -lightDir);
     diffuseFactor = max(diffuseFactor, 0.0f);
     vec3 diffuse = cubeColour * plightColour * diffuseFactor;
 
     // Blinn Phong specular
-    vec3 H = normalize(-lightDirection + viewDir);
+    vec3 H = normalize(-lightDir + viewDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
     specLevel = pow(specLevel, shine);
