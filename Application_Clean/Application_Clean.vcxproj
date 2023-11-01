@@ -151,6 +151,7 @@
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Lights\PointLight.cpp" />
     <ClCompile Include="src\myScene.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\WindowManager.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="include\InputHandler.h" />
     <ClInclude Include="include\Lights\DirectionalLight.h" />
     <ClInclude Include="include\Lights\Light.h" />
+    <ClInclude Include="include\Lights\PointLight.h" />
     <ClInclude Include="include\myScene.h" />
     <ClInclude Include="include\Properties.h" />
     <ClInclude Include="include\Scene.h" />
