@@ -16,8 +16,8 @@ uniform float shine;
 uniform float specStrength;
 
 // Point Light Uniforms
-uniform vec3 plightPosition;
 uniform vec3 plightColour;
+uniform vec3 plightPosition;
 uniform vec3 pAttenuation;
 
 // Spot Light Uniforms
@@ -40,7 +40,7 @@ struct pointLight {
     vec3 constants;
 };
 
-#define numPL 1
+#define numPL 2
 uniform pointLight[numPL] pointLights;
 
 void main() {
@@ -92,5 +92,5 @@ vec3 getPointLight() {
     diffuse *= attn;
     specular *= attn;
 
-    return ambient + diffuse + specular;
+    return diffuse + specular;
 }
