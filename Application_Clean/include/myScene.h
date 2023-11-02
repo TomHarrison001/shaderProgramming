@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include "Lights/DirectionalLight.h"
 #include "Lights/PointLight.h"
+#include "Lights/SpotLight.h"
 #include "Cube/Cube.h"
 
 class MyScene : public Scene {
@@ -15,6 +16,8 @@ private:
 	DirectionalLight* m_directionalLight;
 	std::vector<PointLight*> m_pointLights;
 	PointLight* m_pointLight;
+	std::vector<SpotLight*> m_spotLights;
+	SpotLight* m_spotLight;
 	Cube* m_cube;
 
 	void render();
