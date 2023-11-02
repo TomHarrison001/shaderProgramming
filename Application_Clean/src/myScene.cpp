@@ -19,13 +19,6 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 		m_pointLight->setLightUniforms(m_myShader);
 	}
 
-	m_spotLight = new SpotLight(glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, -7.0, 0.0), glm::vec3(1.0, 0.027, 0.0028), 0, glm::vec3(0.0, 1.0, 0.0), glm::vec2(glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
-	m_spotLights.push_back(m_spotLight);
-
-	for (SpotLight* m_spotLight : m_spotLights) {
-		m_spotLight->setLightUniforms(m_myShader);
-	}
-
 	m_cube = new Cube(glm::vec3(0.1, 0.2, 0.5), 16, 0.9);
 	m_cube->setCubeMaterialValues(m_myShader);
 }
@@ -45,22 +38,17 @@ void MyScene::update(float dt) {
 	render();
 }
 void MyScene::render() {
-	// bind shader
 	m_myShader->use();
-	// set uniforms
+
+	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), glm::vec3(1.0, 0.027, 0.0028), 0, m_camera->getFront(), glm::vec2(glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
+	m_spotLight->setLightUniforms(m_myShader);
+
 	m_myShader->setMat4("Projection", m_camera->getProjectionMatrix());
 	m_myShader->setMat4("View", m_camera->getViewMatrix());
 	m_myShader->setVec3("viewPos", m_camera->getPosition());
-	
 	glBindVertexArray(m_cube->getVAO());
 	m_cube->setTransform(m_myShader);
 	glDrawElements(GL_TRIANGLES, m_cube->getIndicesCount(), GL_UNSIGNED_INT, 0);
-
-	m_cube->translate(glm::vec3(5.0, 0.0, 0.0));
-	m_cube->rotate((float)(glfwGetTime() * 0.5), glm::vec3(1.0, 0.0, 0.0));
-	m_cube->setTransform(m_myShader);
-	glDrawElements(GL_TRIANGLES, m_cube->getIndicesCount(), GL_UNSIGNED_INT, 0);
-	m_cube->resetTransform();
 }
 glm::vec3 MyScene::makeRandom(glm::vec3 lower, glm::vec3 upper) {
 	std::random_device rd;
