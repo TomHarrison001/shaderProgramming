@@ -18,4 +18,5 @@ private:
 	Cube* m_cube;
 
 	void render();
+	glm::vec3 makeRandom(glm::vec3 lower, glm::vec3 upper);
 };

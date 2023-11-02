@@ -40,7 +40,7 @@ struct pointLight {
     vec3 constants;
 };
 
-#define numPointLights 1
+#define numPointLights 325
 uniform pointLight pLight[numPointLights];
 
 void main() {
