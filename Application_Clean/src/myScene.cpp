@@ -9,8 +9,15 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_directionalLight = new DirectionalLight(glm::vec3(1.0, 1.0, 1.0), glm::vec3(-1.0, -1.0, -1.0));
 	m_directionalLight->setLightUniforms(m_myShader);
 
+	/*m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.22, 0.02));
+	m_pointLight->setLightUniforms(m_myShader);*/
+
 	m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.22, 0.02));
-	m_pointLight->setLightUniforms(m_myShader);
+	m_pointLights.push_back(m_pointLight);
+
+	for (PointLight* m_pointLight : m_pointLights) {
+		m_pointLight->setLightUniforms(m_myShader);
+	}
 
 	m_cube = new Cube(glm::vec3(0.1, 0.2, 0.5), 16, 0.9);
 	m_cube->setCubeMaterialValues(m_myShader);
@@ -18,7 +25,11 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 MyScene::~MyScene() {
 	delete m_myShader;
 	delete m_directionalLight;
-	delete m_pointLight;
+
+	for (PointLight* m_pointLight : m_pointLights) {
+		delete m_pointLight;
+	}
+
 	delete m_cube;
 }
 void MyScene::update(float dt) {

@@ -31,7 +31,7 @@ vec3 n = normalize(normal);
 vec3 viewDir = normalize(viewPos - posInWS);
 
 vec3 getDirectionalLight();
-vec3 getPointLight();
+vec3 getPointLight(int i);
 vec3 getSpotLight();
 
 struct pointLight {
@@ -40,12 +40,14 @@ struct pointLight {
     vec3 constants;
 };
 
-#define numPL 2
-uniform pointLight[numPL] pointLights;
+#define numPointLights 1
+uniform pointLight pLight[numPointLights];
 
 void main() {
     vec3 result = getDirectionalLight();
-    result += getPointLight();
+    for (int i = 0; i < numPointLights; i++) {
+        result += getPointLight(i);
+    }
     FragColour = vec4(result, 1.0);
 }
 
@@ -68,25 +70,25 @@ vec3 getDirectionalLight() {
     return ambient + diffuse + specular;
 }
 
-vec3 getPointLight() {
-    float distance = length(plightPosition - posInWS);
-    float attn = 1.0 / (pAttenuation.x + pAttenuation.y * distance + pAttenuation.z * distance * distance);
-    vec3 lightDir = normalize(plightPosition - posInWS);
+vec3 getPointLight(int i) {
+    float distance = length(pLight[i].position - posInWS);
+    float attn = 1.0 / (pLight[i].constants.x + pLight[i].constants.y * distance + pLight[i].constants.z * distance * distance);
+    vec3 lightDir = normalize(pLight[i].position - posInWS);
 
     // ambient
-    vec3 ambient = cubeColour * plightColour * ambientFactor;
+    vec3 ambient = cubeColour * pLight[i].colour * ambientFactor;
     
     // diffuse
     float diffuseFactor = dot(n, -lightDir);
     diffuseFactor = max(diffuseFactor, 0.0f);
-    vec3 diffuse = cubeColour * plightColour * diffuseFactor;
+    vec3 diffuse = cubeColour * pLight[i].colour * diffuseFactor;
 
     // Blinn Phong specular
     vec3 H = normalize(-lightDir + viewDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
     specLevel = pow(specLevel, shine);
-    vec3 specular = plightColour * specLevel * specStrength;
+    vec3 specular = pLight[i].colour * specLevel * specStrength;
 
     ambient *= attn;
     diffuse *= attn;

@@ -13,6 +13,7 @@ public:
 private:
 	Shader* m_myShader;
 	DirectionalLight* m_directionalLight;
+	std::vector<PointLight*> m_pointLights;
 	PointLight* m_pointLight;
 	Cube* m_cube;
 
