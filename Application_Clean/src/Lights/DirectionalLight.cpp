@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Lights/DirectionalLight.h"
 
 DirectionalLight::DirectionalLight(glm::vec3 colour, glm::vec3 direction, float ambient) :

@@ -21,6 +21,9 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 
 	m_cube = new Cube(glm::vec3(0.1, 0.2, 0.5), 16, 0.9);
 	m_cube->setCubeMaterialValues(m_myShader);
+
+	m_plane = new Plane(glm::vec3(1.0, 1.0, 1.0), 16, 0.9);
+	m_plane->setCubeMaterialValues(m_myShader);
 }
 MyScene::~MyScene() {
 	delete m_myShader;
@@ -32,6 +35,7 @@ MyScene::~MyScene() {
 		delete m_spotLight;
 	}
 	delete m_cube;
+	delete m_plane;
 }
 void MyScene::update(float dt) {
 	m_camera->update(dt);
@@ -49,6 +53,9 @@ void MyScene::render() {
 	glBindVertexArray(m_cube->getVAO());
 	m_cube->setTransform(m_myShader);
 	glDrawElements(GL_TRIANGLES, m_cube->getIndicesCount(), GL_UNSIGNED_INT, 0);
+	glBindVertexArray(m_plane->getVAO());
+	m_plane->setTransform(m_myShader);
+	glDrawElements(GL_TRIANGLES, m_plane->getIndicesCount(), GL_UNSIGNED_INT, 0);
 }
 glm::vec3 MyScene::makeRandom(glm::vec3 lower, glm::vec3 upper) {
 	std::random_device rd;

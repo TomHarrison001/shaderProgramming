@@ -9,7 +9,7 @@
 
 class Cube {
 public:
-	Cube(glm::vec3 col, float shine, float specStrength);
+	Cube(glm::vec3 colour, float shine, float specStrength);
 	~Cube() {}
 	void setCubeMaterialValues(Shader* shader);
 	void setTransform(Shader* shader) { shader->setMat4("Model", m_transform); }

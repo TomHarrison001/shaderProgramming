@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Lights/PointLight.h"
 
 PointLight::PointLight(glm::vec3 colour, glm::vec3 position, glm::vec3 constants, int index) :

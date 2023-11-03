@@ -4,7 +4,8 @@
 #include "Lights/DirectionalLight.h"
 #include "Lights/PointLight.h"
 #include "Lights/SpotLight.h"
-#include "Cube/Cube.h"
+#include "Geometry/Cube.h"
+#include "Geometry/Plane.h"
 
 class MyScene : public Scene {
 public:
@@ -19,6 +20,7 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 	SpotLight* m_spotLight;
 	Cube* m_cube;
+	Plane* m_plane;
 
 	void render();
 	glm::vec3 makeRandom(glm::vec3 lower, glm::vec3 upper);

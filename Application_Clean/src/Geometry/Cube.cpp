@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Cube/Cube.h"
+#include "Geometry/Cube.h"
 
-Cube::Cube(glm::vec3 col, float shine, float specStrength) : m_colour(col), m_shine(shine), m_specularStrength(specStrength) {
+Cube::Cube(glm::vec3 colour, float shine, float specStrength) : m_colour(colour), m_shine(shine), m_specularStrength(specStrength) {
 	makeVAO();
 	resetTransform();
 }
 void Cube::setCubeMaterialValues(Shader* shader) {
 	shader->use();
 	shader->setVec3("cubeColour", m_colour);
-	shader->setFloat("shine", m_shine);
-	shader->setFloat("specStrength", m_specularStrength);
+	shader->setFloat("cubeShine", m_shine);
+	shader->setFloat("cubeSpecStrength", m_specularStrength);
 }
 void Cube::makeVAO() {
 	glCreateBuffers(1, &m_VBO);  // Create VBO (Vertex Buffer Object - unsigned ints storing texture, mesh, shader)

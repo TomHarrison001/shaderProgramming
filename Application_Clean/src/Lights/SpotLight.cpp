@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Lights/SpotLight.h"
 
 SpotLight::SpotLight(glm::vec3 colour, glm::vec3 position, glm::vec3 constants, int index, glm::vec3 dir, glm::vec2 radii) :
