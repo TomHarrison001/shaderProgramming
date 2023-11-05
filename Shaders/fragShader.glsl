@@ -7,12 +7,9 @@ in vec3 posInWS;
 uniform vec3 viewPos;
 
 // Geometry Uniforms
-uniform vec3 cubeColour;
-uniform vec3 planeColour;
-uniform float cubeShine;
-uniform float planeShine;
-uniform float cubeSpecStrength;
-uniform float planeSpecStrength;
+uniform vec3 objColour;
+uniform float objShine;
+uniform float objSpecStrength;
 
 // Directional Light Uniforms
 uniform vec3 lightColour;
@@ -61,19 +58,19 @@ void main() {
 
 vec3 getDirectionalLight() {
     // ambient
-    vec3 ambient = cubeColour * lightColour * ambientFactor;
+    vec3 ambient = objColour * lightColour * ambientFactor;
 
     // diffuse
     float diffuseFactor = dot(n, -lightDirection);
     diffuseFactor = max(diffuseFactor, 0.0f);
-    vec3 diffuse = cubeColour * lightColour * diffuseFactor;
+    vec3 diffuse = objColour * lightColour * diffuseFactor;
 
     // Blinn Phong specular
     vec3 H = normalize(-lightDirection + viewDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, cubeShine);
-    vec3 specular = lightColour * specLevel * cubeSpecStrength;
+    specLevel = pow(specLevel, objShine);
+    vec3 specular = lightColour * specLevel * objSpecStrength;
 
     return ambient + diffuse + specular;
 }
@@ -84,19 +81,19 @@ vec3 getPointLight(int i) {
     vec3 lightDir = normalize(pLight[i].position - posInWS);
 
     // ambient
-    vec3 ambient = cubeColour * pLight[i].colour * ambientFactor;
+    vec3 ambient = objColour * pLight[i].colour * ambientFactor;
     
     // diffuse
     float diffuseFactor = dot(n, -lightDir);
     diffuseFactor = max(diffuseFactor, 0.0f);
-    vec3 diffuse = cubeColour * pLight[i].colour * diffuseFactor;
+    vec3 diffuse = objColour * pLight[i].colour * diffuseFactor;
 
     // Blinn Phong specular
     vec3 H = normalize(-lightDir + viewDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, cubeShine);
-    vec3 specular = pLight[i].colour * specLevel * cubeSpecStrength;
+    specLevel = pow(specLevel, objShine);
+    vec3 specular = pLight[i].colour * specLevel * objSpecStrength;
 
     ambient *= attn;
     diffuse *= attn;
@@ -111,19 +108,19 @@ vec3 getSpotLight(int i) {
     vec3 lightDir = normalize(sLight[i].position - posInWS);
 
     // ambient
-    vec3 ambient = cubeColour * sLight[i].colour * ambientFactor;
+    vec3 ambient = objColour * sLight[i].colour * ambientFactor;
     
     // diffuse
     float diffuseFactor = dot(n, -lightDir);
     diffuseFactor = max(diffuseFactor, 0.0f);
-    vec3 diffuse = cubeColour * sLight[i].colour * diffuseFactor;
+    vec3 diffuse = objColour * sLight[i].colour * diffuseFactor;
 
     // Blinn Phong specular
     vec3 H = normalize(-lightDir + viewDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, cubeShine);
-    vec3 specular = sLight[i].colour * specLevel * cubeSpecStrength;
+    specLevel = pow(specLevel, objShine);
+    vec3 specular = sLight[i].colour * specLevel * objSpecStrength;
     
     ambient *= attn;
     diffuse *= attn;

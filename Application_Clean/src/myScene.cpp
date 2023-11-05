@@ -12,18 +12,13 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 
 	m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.22, 0.02), 0);
 	m_pointLights.push_back(m_pointLight);
-	//m_pointLight = new PointLight(glm::vec3(0.0, 1.0, 0.0), glm::vec3(-1.0, 0.0, 0.0), glm::vec3(1.0, 0.22, 0.02), 1);
-	//m_pointLights.push_back(m_pointLight);
 
 	for (PointLight* m_pointLight : m_pointLights) {
 		m_pointLight->setLightUniforms(m_myShader);
 	}
 
 	m_cube = new Cube(glm::vec3(0.1, 0.2, 0.5), 16, 0.9);
-	m_cube->setCubeMaterialValues(m_myShader);
-
 	m_plane = new Plane(glm::vec3(1.0, 1.0, 1.0), 16, 0.9);
-	m_plane->setCubeMaterialValues(m_myShader);
 }
 MyScene::~MyScene() {
 	delete m_myShader;
@@ -43,16 +38,18 @@ void MyScene::update(float dt) {
 }
 void MyScene::render() {
 	m_myShader->use();
+	m_myShader->setMat4("Projection", m_camera->getProjectionMatrix());
+	m_myShader->setMat4("View", m_camera->getViewMatrix());
+	m_myShader->setVec3("viewPos", m_camera->getPosition());
 
 	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), glm::vec3(1.0, 0.027, 0.0028), 0, m_camera->getFront(), glm::vec2(glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
 	m_spotLight->setLightUniforms(m_myShader);
 
-	m_myShader->setMat4("Projection", m_camera->getProjectionMatrix());
-	m_myShader->setMat4("View", m_camera->getViewMatrix());
-	m_myShader->setVec3("viewPos", m_camera->getPosition());
+	m_cube->setMaterialValues(m_myShader);
 	glBindVertexArray(m_cube->getVAO());
 	m_cube->setTransform(m_myShader);
 	glDrawElements(GL_TRIANGLES, m_cube->getIndicesCount(), GL_UNSIGNED_INT, 0);
+	m_plane->setMaterialValues(m_myShader);
 	glBindVertexArray(m_plane->getVAO());
 	m_plane->setTransform(m_myShader);
 	glDrawElements(GL_TRIANGLES, m_plane->getIndicesCount(), GL_UNSIGNED_INT, 0);
