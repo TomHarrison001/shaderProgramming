@@ -17,6 +17,13 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 		m_pointLight->setLightUniforms(m_myShader);
 	}
 
+	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), glm::vec3(1.0, 0.027, 0.0028), 0, m_camera->getFront(), glm::vec2(glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
+	m_spotLights.push_back(m_spotLight);
+	
+	for (SpotLight* m_spotLight : m_spotLights) {
+		m_spotLight->setLightUniforms(m_myShader);
+	}
+
 	m_cube = new Cube(glm::vec3(0.1, 0.2, 0.5), 16, 0.9);
 	m_plane = new Plane(glm::vec3(1.0, 1.0, 1.0), 16, 0.9);
 }
@@ -42,7 +49,9 @@ void MyScene::render() {
 	m_myShader->setMat4("View", m_camera->getViewMatrix());
 	m_myShader->setVec3("viewPos", m_camera->getPosition());
 
-	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), glm::vec3(1.0, 0.027, 0.0028), 0, m_camera->getFront(), glm::vec2(glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
+	m_spotLight = m_spotLights.front();
+	m_spotLight->setPosition(m_camera->getPosition());
+	m_spotLight->setDirection(m_camera->getFront());
 	m_spotLight->setLightUniforms(m_myShader);
 
 	m_cube->setMaterialValues(m_myShader);
