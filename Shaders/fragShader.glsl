@@ -3,6 +3,7 @@
 out vec4 FragColour;
 in vec3 normal;
 in vec3 posInWS;
+in vec2 uv;
 
 uniform vec3 viewPos;
 
@@ -10,6 +11,11 @@ uniform vec3 viewPos;
 uniform vec3 objColour;
 uniform float objShine;
 uniform float objSpecStrength;
+
+// Material Uniforms
+uniform sampler2D diffuseMap;
+uniform sampler2D specularMap;
+uniform float shine;
 
 // Directional Light Uniforms
 uniform vec3 lightColour;
@@ -45,6 +51,9 @@ struct spotLight {
 uniform spotLight sLight[numSpotLights];
 
 void main() {
+    vec3 objColour = texture(diffuseMap, uv).rgb;
+    float specStrength = texture(specularMap, uv).r;
+
     vec3 result = getDirectionalLight();
     for (int i = 0; i < numPointLights; i++) {
         result += getPointLight(i);

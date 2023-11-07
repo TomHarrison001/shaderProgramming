@@ -31,7 +31,7 @@ protected:
 	glm::vec3 m_colour;
 	float m_shine;
 	float m_specStrength;
-	int m_strides = 6;
+	int m_strides = 8;
 
 	const float planeLevel = -2.0f;
 	const float planeSize = 7.0f;

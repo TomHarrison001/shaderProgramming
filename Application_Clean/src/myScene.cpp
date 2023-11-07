@@ -7,6 +7,9 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_camera->attachHandler(m_window, m_handler);
 	m_myShader = new Shader("..\\Shaders\\vertShader.glsl", "..\\Shaders\\fragShader.glsl");
 
+	unsigned int cubeDiff = TextureManager::loadTexture("..\\Resources\\diffuseCube.jpg");
+	unsigned int cubeSpec = TextureManager::loadTexture("..\\Resources\\specularCube.jpg");
+
 	m_directionalLight = new DirectionalLight(glm::vec3(1.0, 1.0, 1.0), glm::vec3(-1.0, -1.0, -1.0));
 	m_directionalLight->setLightUniforms(m_myShader);
 

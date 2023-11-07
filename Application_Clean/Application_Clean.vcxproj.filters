@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Geometry">
+      <UniqueIdentifier>{3ce9582c-2659-4d67-a997-8e1c7d2e2e06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lights">
+      <UniqueIdentifier>{61021246-9a2e-457c-880c-acdc078a306f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Textures">
+      <UniqueIdentifier>{3f7ce168-0117-4a64-9563-daa8c9acff49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{5bc12c58-a76b-4575-85ef-c84ba58d6731}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Textures">
+      <UniqueIdentifier>{39c3d1ef-cb8a-4bc3-90b3-2bc37288fcd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lights">
+      <UniqueIdentifier>{ba1ce9f9-db37-418b-bfba-e1d6038d0533}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EntryPoint.cpp">
@@ -36,23 +54,29 @@
     <ClCompile Include="src\myScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Lights\DirectionalLight.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Textures\stb_image.cpp">
+      <Filter>Source Files\Textures</Filter>
     </ClCompile>
-    <ClCompile Include="src\Lights\PointLight.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Lights\DirectionalLight.cpp">
+      <Filter>Source Files\Lights</Filter>
     </ClCompile>
     <ClCompile Include="src\Lights\SpotLight.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Lights\PointLight.cpp">
+      <Filter>Source Files\Lights</Filter>
     </ClCompile>
     <ClCompile Include="src\Geometry\Cube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Geometry\Plane.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="src\Geometry\Object.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Geometry\Plane.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Textures\TextureManager.cpp">
+      <Filter>Source Files\Textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,26 +107,32 @@
     <ClInclude Include="include\myScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Lights\DirectionalLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Lights\Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Lights\PointLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Lights\SpotLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Geometry\Cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Geometry\Plane.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="include\Geometry\Object.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Geometry\Plane.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Lights\DirectionalLight.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Lights\Light.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Lights\PointLight.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Lights\SpotLight.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Textures\stb_image.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Textures\TextureManager.h">
+      <Filter>Header Files\Textures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -112,5 +142,19 @@
     <None Include="..\Shaders\vertShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\diffuseCube.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Resources\diffuseFloor.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Resources\specularCube.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Resources\specularFloor.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

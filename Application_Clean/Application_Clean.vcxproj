@@ -157,6 +157,8 @@
     <ClCompile Include="src\Lights\SpotLight.cpp" />
     <ClCompile Include="src\myScene.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Textures\stb_image.cpp" />
+    <ClCompile Include="src\Textures\TextureManager.cpp" />
     <ClCompile Include="src\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,11 +177,19 @@
     <ClInclude Include="include\Properties.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\Textures\stb_image.h" />
+    <ClInclude Include="include\Textures\TextureManager.h" />
     <ClInclude Include="include\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\fragShader.glsl" />
     <None Include="..\Shaders\vertShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\diffuseCube.jpg" />
+    <Image Include="..\Resources\diffuseFloor.jpg" />
+    <Image Include="..\Resources\specularCube.jpg" />
+    <Image Include="..\Resources\specularFloor.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

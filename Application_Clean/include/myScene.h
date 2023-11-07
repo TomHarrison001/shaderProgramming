@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Shader.h"
+#include "Textures/TextureManager.h"
 #include "Lights/DirectionalLight.h"
 #include "Lights/PointLight.h"
 #include "Lights/SpotLight.h"
