@@ -2,7 +2,7 @@
 
 #include "Geometry/Cube.h"
 
-Cube::Cube(glm::vec3 colour, float shine, float specStrength) : Object(colour, shine, specStrength) {
+Cube::Cube(char const* diffusePath, char const* specPath, float shine) : Object(diffusePath, specPath, shine) {
 	setVertexData(vertexData);
 	setIndices(indices);
 	makeVAO();

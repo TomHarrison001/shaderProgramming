@@ -7,11 +7,6 @@ in vec2 uv;
 
 uniform vec3 viewPos;
 
-// Geometry Uniforms
-uniform vec3 objColour;
-uniform float objShine;
-uniform float objSpecStrength;
-
 // Material Uniforms
 uniform sampler2D diffuseMap;
 uniform sampler2D specularMap;
@@ -24,6 +19,8 @@ uniform float ambientFactor;
 
 vec3 n = normalize(normal);
 vec3 viewDir = normalize(viewPos - posInWS);
+vec3 objColour = texture(diffuseMap, uv).rgb;
+float specStrength = texture(specularMap, uv).r;
 
 vec3 getDirectionalLight();
 vec3 getPointLight(int i);
@@ -51,9 +48,6 @@ struct spotLight {
 uniform spotLight sLight[numSpotLights];
 
 void main() {
-    vec3 objColour = texture(diffuseMap, uv).rgb;
-    float specStrength = texture(specularMap, uv).r;
-
     vec3 result = getDirectionalLight();
     for (int i = 0; i < numPointLights; i++) {
         result += getPointLight(i);
@@ -78,8 +72,8 @@ vec3 getDirectionalLight() {
     vec3 H = normalize(-lightDirection + viewDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, objShine);
-    vec3 specular = lightColour * specLevel * objSpecStrength;
+    specLevel = pow(specLevel, shine);
+    vec3 specular = lightColour * specLevel * specStrength;
 
     return ambient + diffuse + specular;
 }
@@ -101,8 +95,8 @@ vec3 getPointLight(int i) {
     vec3 H = normalize(-lightDir + viewDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, objShine);
-    vec3 specular = pLight[i].colour * specLevel * objSpecStrength;
+    specLevel = pow(specLevel, shine);
+    vec3 specular = pLight[i].colour * specLevel * specStrength;
 
     ambient *= attn;
     diffuse *= attn;
@@ -128,8 +122,8 @@ vec3 getSpotLight(int i) {
     vec3 H = normalize(viewDir + lightDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, objShine);
-    vec3 specular = sLight[i].colour * specLevel * objSpecStrength;
+    specLevel = pow(specLevel, shine);
+    vec3 specular = sLight[i].colour * specLevel * specStrength;
     
     ambient *= attn;
     diffuse *= attn;

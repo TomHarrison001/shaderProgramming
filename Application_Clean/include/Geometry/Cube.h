@@ -4,7 +4,7 @@
 
 class Cube : public Object {
 public:
-	Cube(glm::vec3 colour, float shine, float specStrength);
+	Cube(char const* diffusePath, char const* specPath, float shine);
 	~Cube() {}
 
 protected:

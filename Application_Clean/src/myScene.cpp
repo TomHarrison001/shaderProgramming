@@ -7,9 +7,6 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_camera->attachHandler(m_window, m_handler);
 	m_myShader = new Shader("..\\Shaders\\vertShader.glsl", "..\\Shaders\\fragShader.glsl");
 
-	unsigned int cubeDiff = TextureManager::loadTexture("..\\Resources\\diffuseCube.jpg");
-	unsigned int cubeSpec = TextureManager::loadTexture("..\\Resources\\specularCube.jpg");
-
 	m_directionalLight = new DirectionalLight(glm::vec3(1.0, 1.0, 1.0), glm::vec3(-1.0, -1.0, -1.0));
 	m_directionalLight->setLightUniforms(m_myShader);
 
@@ -20,15 +17,15 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 		m_pointLight->setLightUniforms(m_myShader);
 	}
 
-	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), glm::vec3(1.0, 0.027, 0.0028), 0, m_camera->getFront(), glm::vec2(glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
+	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), glm::vec3(1.0, 0.027, 0.0028), 0, m_camera->getFront(), glm::vec2(glm::cos(glm::radians(7.5f)), glm::cos(glm::radians(12.5f))));
 	m_spotLights.push_back(m_spotLight);
 	
 	for (SpotLight* m_spotLight : m_spotLights) {
 		m_spotLight->setLightUniforms(m_myShader);
 	}
 
-	m_cube = new Cube(glm::vec3(0.1, 0.2, 0.5), 16, 0.9);
-	m_plane = new Plane(glm::vec3(1.0, 1.0, 1.0), 16, 0.9);
+	m_cube = new Cube("..\\Resources\\diffuseCube.jpg", "..\\Resources\\specularCube.jpg", 0.9);
+	m_plane = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
 }
 MyScene::~MyScene() {
 	delete m_myShader;

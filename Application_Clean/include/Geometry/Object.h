@@ -6,10 +6,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include "Shader.h"
+#include "Textures/TextureManager.h"
 
 class Object {
 public:
-	Object(glm::vec3 colour, float shine, float specStrength);
+	Object(char const* diffusePath, char const* specPath, float shine);
 	~Object() {}
 	void setMaterialValues(Shader* shader);
 	void setTransform(Shader* shader) { shader->setMat4("Model", m_transform); }
@@ -27,14 +28,10 @@ public:
 protected:
 	void makeVAO();
 	unsigned int m_VBO, m_VAO, m_EBO;
+	unsigned int m_diffuseTexture, m_specularTexture;
 	glm::mat4 m_transform;
-	glm::vec3 m_colour;
 	float m_shine;
-	float m_specStrength;
 	int m_strides = 8;
-
-	const float planeLevel = -2.0f;
-	const float planeSize = 7.0f;
 
 	std::vector<float> vertexData;
 	std::vector<unsigned int> indices;

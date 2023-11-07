@@ -2,11 +2,12 @@
 
 #include "Geometry/Object.h"
 
-Object::Object(glm::vec3 colour, float shine, float specStrength) : m_colour(colour), m_shine(shine), m_specStrength(specStrength) {}
+Object::Object(char const* diffusePath, char const* specPath, float shine) : m_shine(shine) {
+	m_diffuseTexture = TextureManager::loadTexture(diffusePath);
+	m_specularTexture = TextureManager::loadTexture(specPath);
+}
 void Object::setMaterialValues(Shader* shader) {
 	shader->use();
-	// shader->setVec3("objColour", m_colour);
-	// shader->setFloat("objSpecStrength", m_specStrength);
 	shader->setFloat("shine", m_shine);
 	shader->setInt("diffuseMap", 0);
 	shader->setInt("specularMap", 1);

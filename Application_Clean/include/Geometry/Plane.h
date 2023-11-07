@@ -4,7 +4,7 @@
 
 class Plane : public Object {
 public:
-	Plane(glm::vec3 colour, float shine, float specStrength);
+	Plane(char const* diffusePath, char const* specPath, float shine);
 	~Plane() {}
 
 protected:
