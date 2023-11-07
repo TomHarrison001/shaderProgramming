@@ -24,8 +24,27 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 		m_spotLight->setLightUniforms(m_myShader);
 	}
 
-	m_cube = new Cube("..\\Resources\\diffuseCube.jpg", "..\\Resources\\specularCube.jpg", 0.9);
-	m_plane = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object = new Cube("..\\Resources\\diffuseCube.jpg", "..\\Resources\\specularCube.jpg", 0.9);
+	m_object->translate(glm::vec3(0.0, 1.0, 0.0));
+	m_objects.push_back(m_object);
+	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_objects.push_back(m_object);
+	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object->rotate(glm::pi<float>() / 2, glm::vec3(1.0, 0.0, 0.0));
+	m_object->translate(glm::vec3(0.0, -7.5, -7.5));
+	m_objects.push_back(m_object);
+	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object->rotate(glm::pi<float>() / 2, glm::vec3(-1.0, 0.0, 0.0));
+	m_object->translate(glm::vec3(0.0, -7.5, 7.5));
+	m_objects.push_back(m_object);
+	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, 1.0));
+	m_object->translate(glm::vec3(7.5, -7.5, 0.0));
+	m_objects.push_back(m_object);
+	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, -1.0));
+	m_object->translate(glm::vec3(-7.5, -7.5, 0.0));
+	m_objects.push_back(m_object);
 }
 MyScene::~MyScene() {
 	delete m_myShader;
@@ -36,8 +55,9 @@ MyScene::~MyScene() {
 	for (SpotLight* m_spotLight : m_spotLights) {
 		delete m_spotLight;
 	}
-	delete m_cube;
-	delete m_plane;
+	for (Object* m_object : m_objects) {
+		delete m_object;
+	}
 }
 void MyScene::update(float dt) {
 	m_camera->update(dt);
@@ -54,14 +74,12 @@ void MyScene::render() {
 	m_spotLight->setDirection(m_camera->getFront());
 	m_spotLight->setLightUniforms(m_myShader);
 
-	m_cube->setMaterialValues(m_myShader);
-	glBindVertexArray(m_cube->getVAO());
-	m_cube->setTransform(m_myShader);
-	glDrawElements(GL_TRIANGLES, m_cube->getIndicesCount(), GL_UNSIGNED_INT, 0);
-	m_plane->setMaterialValues(m_myShader);
-	glBindVertexArray(m_plane->getVAO());
-	m_plane->setTransform(m_myShader);
-	glDrawElements(GL_TRIANGLES, m_plane->getIndicesCount(), GL_UNSIGNED_INT, 0);
+	for (Object* m_object : m_objects) {
+		m_object->setMaterialValues(m_myShader);
+		glBindVertexArray(m_object->getVAO());
+		m_object->setTransform(m_myShader);
+		glDrawElements(GL_TRIANGLES, m_object->getIndicesCount(), GL_UNSIGNED_INT, 0);
+	}
 }
 glm::vec3 MyScene::makeRandom(glm::vec3 lower, glm::vec3 upper) {
 	std::random_device rd;

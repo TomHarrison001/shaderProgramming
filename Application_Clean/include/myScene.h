@@ -15,12 +15,12 @@ public:
 private:
 	Shader* m_myShader;
 	DirectionalLight* m_directionalLight;
-	std::vector<PointLight*> m_pointLights;
 	PointLight* m_pointLight;
-	std::vector<SpotLight*> m_spotLights;
+	std::vector<PointLight*> m_pointLights;
 	SpotLight* m_spotLight;
-	Cube* m_cube;
-	Plane* m_plane;
+	std::vector<SpotLight*> m_spotLights;
+	Object* m_object;
+	std::vector<Object*> m_objects;
 
 	void render();
 	glm::vec3 makeRandom(glm::vec3 lower, glm::vec3 upper);
