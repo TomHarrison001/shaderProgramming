@@ -33,7 +33,7 @@ struct pointLight {
     vec3 constants;
 };
 
-#define numPointLights 1
+#define numPointLights 100
 uniform pointLight pLight[numPointLights];
 
 struct spotLight {
@@ -87,12 +87,12 @@ vec3 getPointLight(int i) {
     vec3 ambient = objColour * pLight[i].colour * ambientFactor;
     
     // diffuse
-    float diffuseFactor = dot(n, -lightDir);
+    float diffuseFactor = dot(n, lightDir);
     diffuseFactor = max(diffuseFactor, 0.0f);
     vec3 diffuse = objColour * pLight[i].colour * diffuseFactor;
 
     // Blinn Phong specular
-    vec3 H = normalize(-lightDir + viewDir);
+    vec3 H = normalize(lightDir + viewDir);
     float specLevel = dot(n, H);
     specLevel = max(specLevel, 0.0);
     specLevel = pow(specLevel, shine);
