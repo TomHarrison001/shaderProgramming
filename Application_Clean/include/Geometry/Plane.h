@@ -9,7 +9,7 @@ public:
 
 protected:
 	const float planeLevel = 0.0f;
-	const float planeSize = 7.5f;
+	const float planeSize = 5.0f;
 	
 	std::vector<float> vertexData = {
 		-planeSize, planeLevel, -planeSize, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,

@@ -7,14 +7,14 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_camera->attachHandler(m_window, m_handler);
 	m_myShader = new Shader("..\\Shaders\\vertShader.glsl", "..\\Shaders\\fragShader.glsl");
 
-	m_directionalLight = new DirectionalLight(glm::vec3(1.0, 1.0, 1.0), glm::vec3(-1.0, -1.0, -1.0));
+	m_directionalLight = new DirectionalLight(glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, -1.0, 0.0));
 	m_directionalLight->setLightUniforms(m_myShader);
 
 	//m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.22, 0.02), 0);
 	//m_pointLights.push_back(m_pointLight);
 	
-	for (int i = 0; i < 5; i++) {
-		m_pointLight = new PointLight(makeRandom(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 1.0, 1.0)), makeRandom(glm::vec3(-7.4, 1.0, -7.4), glm::vec3(7.4, 2.0, 7.4)), glm::vec3(1.0, 0.02, 0.6), i);
+	for (int i = 0; i < 100; i++) {
+		m_pointLight = new PointLight(makeRandom(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 1.0, 1.0)), makeRandom(glm::vec3(-4.9, 1.0, -4.9), glm::vec3(4.9, 9.9, 4.9)), glm::vec3(1.0, 0.3, 0.9), i);
 		m_pointLights.push_back(m_pointLight);
 	}
 
@@ -40,23 +40,23 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_object = new Cube(m_cubeDiffTexture, m_cubeSpecTexture, m_cubeNormTexture, 0.9);
 	m_object->translate(glm::vec3(0.0, 1.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.5);
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.01);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(1.0, 0.0, 0.0));
-	m_object->translate(glm::vec3(0.0, -7.5, -7.5));
+	m_object->translate(glm::vec3(0.0, -5.0, -5.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.01);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(-1.0, 0.0, 0.0));
-	m_object->translate(glm::vec3(0.0, -7.5, 7.5));
+	m_object->translate(glm::vec3(0.0, -5.0, 5.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.01);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, 1.0));
-	m_object->translate(glm::vec3(7.5, -7.5, 0.0));
+	m_object->translate(glm::vec3(5.0, -5.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.01);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, -1.0));
-	m_object->translate(glm::vec3(-7.5, -7.5, 0.0));
+	m_object->translate(glm::vec3(-5.0, -5.0, 0.0));
 	m_objects.push_back(m_object);
 }
 MyScene::~MyScene() {
