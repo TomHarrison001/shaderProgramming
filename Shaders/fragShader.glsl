@@ -4,12 +4,14 @@ out vec4 FragColour;
 in vec3 normal;
 in vec3 posInWS;
 in vec2 uv;
+in vec3 tangent;
 
 uniform vec3 viewPos;
 
 // Material Uniforms
 uniform sampler2D diffuseMap;
 uniform sampler2D specularMap;
+uniform sampler2D normalMap;
 uniform float shine;
 
 // Directional Light Uniforms

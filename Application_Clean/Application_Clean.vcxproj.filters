@@ -156,5 +156,11 @@
     <Image Include="..\Resources\specularFloor.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\Resources\normalCube.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Resources\normalFloor.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

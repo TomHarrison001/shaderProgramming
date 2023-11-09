@@ -2,15 +2,18 @@
 
 #include "Geometry/Object.h"
 
-Object::Object(unsigned int diffTexture, unsigned int specTexture, float shine) : m_diffTexture(diffTexture), m_specTexture(specTexture), m_shine(shine) {}
+Object::Object(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture, float shine) : 
+	m_diffTexture(diffTexture), m_specTexture(specTexture), m_normTexture(normTexture), m_shine(shine) {}
 void Object::setMaterialValues(Shader* shader) {
 	shader->use();
 	shader->setFloat("shine", m_shine);
 	shader->setInt("diffuseMap", 0);
 	shader->setInt("specularMap", 1);
+	shader->setInt("normalMap", 2);
 
 	glBindTextureUnit(0, m_diffTexture);
 	glBindTextureUnit(1, m_specTexture);
+	glBindTextureUnit(2, m_normTexture);
 }
 void Object::makeVAO() {
 	glCreateBuffers(1, &m_VBO);  // Create VBO (Vertex Buffer Object - unsigned ints storing texture, mesh, shader)
@@ -25,10 +28,13 @@ void Object::makeVAO() {
 	glEnableVertexArrayAttrib(m_VAO, 0);  // Turns on the array in VAO at specified index
 	glEnableVertexArrayAttrib(m_VAO, 1);
 	glEnableVertexArrayAttrib(m_VAO, 2);
+	glEnableVertexArrayAttrib(m_VAO, 3);
 	glVertexArrayAttribFormat(m_VAO, 0, 3, GL_FLOAT, GL_FALSE, 0);  // Specify the organisation of vertex arrays (normalised: GL_FALSE)
 	glVertexArrayAttribFormat(m_VAO, 1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
 	glVertexArrayAttribFormat(m_VAO, 2, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float));
+	glVertexArrayAttribFormat(m_VAO, 3, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float));
 	glVertexArrayAttribBinding(m_VAO, 0, 0);  // assign a vertex attribute to a vertex buffer binding for a vertex array object
 	glVertexArrayAttribBinding(m_VAO, 1, 0);
 	glVertexArrayAttribBinding(m_VAO, 2, 0);
+	glVertexArrayAttribBinding(m_VAO, 3, 0);
 }

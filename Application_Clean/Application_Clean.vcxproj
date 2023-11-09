@@ -188,6 +188,8 @@
   <ItemGroup>
     <Image Include="..\Resources\diffuseCube.jpg" />
     <Image Include="..\Resources\diffuseFloor.jpg" />
+    <Image Include="..\Resources\normalCube.jpg" />
+    <Image Include="..\Resources\normalFloor.jpg" />
     <Image Include="..\Resources\specularCube.jpg" />
     <Image Include="..\Resources\specularFloor.jpg" />
   </ItemGroup>

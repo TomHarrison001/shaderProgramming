@@ -9,7 +9,7 @@
 
 class Object {
 public:
-	Object(unsigned int diffTexture, unsigned int specTexture, float shine);
+	Object(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture, float shine);
 	~Object() {}
 	void setMaterialValues(Shader* shader);
 	void setTransform(Shader* shader) { shader->setMat4("Model", m_transform); }
@@ -27,10 +27,10 @@ public:
 protected:
 	void makeVAO();
 	unsigned int m_VBO, m_VAO, m_EBO;
-	unsigned int m_diffTexture, m_specTexture;
+	unsigned int m_diffTexture, m_specTexture, m_normTexture;
 	glm::mat4 m_transform;
 	float m_shine;
-	int m_strides = 8;
+	int m_strides = 11;
 
 	std::vector<float> vertexData;
 	std::vector<unsigned int> indices;
