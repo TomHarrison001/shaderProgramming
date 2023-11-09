@@ -75,12 +75,16 @@ MyScene::~MyScene() {
 void MyScene::update(float dt) {
 	m_camera->update(dt);
 	render();
+	if (m_handler->isKeyPressed(GLFW_KEY_Q)) {
+		useNM = !useNM;
+	}
 }
 void MyScene::render() {
 	m_myShader->use();
 	m_myShader->setMat4("Projection", m_camera->getProjectionMatrix());
 	m_myShader->setMat4("View", m_camera->getViewMatrix());
 	m_myShader->setVec3("viewPos", m_camera->getPosition());
+	m_myShader->setBool("useNM", useNM);
 
 	m_spotLight = m_spotLights.front();
 	m_spotLight->setPosition(m_camera->getPosition());

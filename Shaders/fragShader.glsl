@@ -4,7 +4,7 @@ out vec4 FragColour;
 in vec3 normal;
 in vec3 posInWS;
 in vec2 uv;
-in vec3 tangent;
+in mat3 TBN;
 
 uniform vec3 viewPos;
 
@@ -23,6 +23,7 @@ vec3 n = normalize(normal);
 vec3 viewDir = normalize(viewPos - posInWS);
 vec3 objColour = texture(diffuseMap, uv).rgb;
 float specStrength = texture(specularMap, uv).r;
+uniform bool useNM;
 
 vec3 getDirectionalLight();
 vec3 getPointLight(int i);
@@ -50,6 +51,11 @@ struct spotLight {
 uniform spotLight sLight[numSpotLights];
 
 void main() {
+    if (useNM) {
+        n = texture(normalMap, uv).rgb;
+        n = n * 2.0 - 1.0;
+        n = normalize(TBN * n);
+    }
     vec3 result = getDirectionalLight();
     for (int i = 0; i < numPointLights; i++) {
         result += getPointLight(i);

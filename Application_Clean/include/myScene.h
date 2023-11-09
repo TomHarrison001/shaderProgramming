@@ -24,6 +24,7 @@ private:
 	std::vector<Object*> m_objects;
 	unsigned int m_cubeDiffTexture, m_cubeSpecTexture, m_cubeNormTexture;
 	unsigned int m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture;
+	bool useNM = false;
 
 	void render();
 	glm::vec3 makeRandom(glm::vec3 lower, glm::vec3 upper);
