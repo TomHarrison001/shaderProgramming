@@ -13,8 +13,8 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	//m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.22, 0.02), 0);
 	//m_pointLights.push_back(m_pointLight);
 	
-	for (int i = 0; i < 100; i++) {
-		m_pointLight = new PointLight(makeRandom(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 1.0, 1.0)), makeRandom(glm::vec3(-7.5, 0.0, -7.5), glm::vec3(7.5, 7.5, 7.5)), glm::vec3(1.0, 0.22, 0.4), i);
+	for (int i = 0; i < 5; i++) {
+		m_pointLight = new PointLight(makeRandom(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 1.0, 1.0)), makeRandom(glm::vec3(-7.4, 1.0, -7.4), glm::vec3(7.4, 2.0, 7.4)), glm::vec3(1.0, 0.02, 0.6), i);
 		m_pointLights.push_back(m_pointLight);
 	}
 
@@ -29,24 +29,30 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 		m_spotLight->setLightUniforms(m_myShader);
 	}
 
-	m_object = new Cube("..\\Resources\\diffuseCube.jpg", "..\\Resources\\specularCube.jpg", 0.9);
+	// Load Textures Once
+	m_cubeDiffTexture = TextureManager::loadTexture("..\\Resources\\diffuseCube.jpg");
+	m_cubeSpecTexture = TextureManager::loadTexture("..\\Resources\\specularCube.jpg");
+	m_planeDiffTexture = TextureManager::loadTexture("..\\Resources\\diffuseFloor.jpg");
+	m_planeSpecTexture = TextureManager::loadTexture("..\\Resources\\specularFloor.jpg");
+
+	m_object = new Cube(m_cubeDiffTexture, m_cubeSpecTexture, 0.9);
 	m_object->translate(glm::vec3(0.0, 1.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, 0.9);
 	m_objects.push_back(m_object);
-	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, 0.9);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(1.0, 0.0, 0.0));
 	m_object->translate(glm::vec3(0.0, -7.5, -7.5));
 	m_objects.push_back(m_object);
-	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, 0.9);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(-1.0, 0.0, 0.0));
 	m_object->translate(glm::vec3(0.0, -7.5, 7.5));
 	m_objects.push_back(m_object);
-	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, 0.9);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, 1.0));
 	m_object->translate(glm::vec3(7.5, -7.5, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane("..\\Resources\\diffuseFloor.jpg", "..\\Resources\\specularFloor.jpg", 0.9);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, 0.9);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, -1.0));
 	m_object->translate(glm::vec3(-7.5, -7.5, 0.0));
 	m_objects.push_back(m_object);

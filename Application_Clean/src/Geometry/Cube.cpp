@@ -2,7 +2,7 @@
 
 #include "Geometry/Cube.h"
 
-Cube::Cube(char const* diffusePath, char const* specPath, float shine) : Object(diffusePath, specPath, shine) {
+Cube::Cube(unsigned int diffTexture, unsigned int specTexture, float shine) : Object(diffTexture, specTexture, shine) {
 	setVertexData(vertexData);
 	setIndices(indices);
 	makeVAO();

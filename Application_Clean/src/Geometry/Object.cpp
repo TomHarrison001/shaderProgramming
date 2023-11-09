@@ -2,18 +2,15 @@
 
 #include "Geometry/Object.h"
 
-Object::Object(char const* diffusePath, char const* specPath, float shine) : m_shine(shine) {
-	m_diffuseTexture = TextureManager::loadTexture(diffusePath);
-	m_specularTexture = TextureManager::loadTexture(specPath);
-}
+Object::Object(unsigned int diffTexture, unsigned int specTexture, float shine) : m_diffTexture(diffTexture), m_specTexture(specTexture), m_shine(shine) {}
 void Object::setMaterialValues(Shader* shader) {
 	shader->use();
 	shader->setFloat("shine", m_shine);
 	shader->setInt("diffuseMap", 0);
 	shader->setInt("specularMap", 1);
 
-	glBindTextureUnit(0, m_diffuseTexture);
-	glBindTextureUnit(1, m_specularTexture);
+	glBindTextureUnit(0, m_diffTexture);
+	glBindTextureUnit(1, m_specTexture);
 }
 void Object::makeVAO() {
 	glCreateBuffers(1, &m_VBO);  // Create VBO (Vertex Buffer Object - unsigned ints storing texture, mesh, shader)

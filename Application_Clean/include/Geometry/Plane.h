@@ -4,7 +4,7 @@
 
 class Plane : public Object {
 public:
-	Plane(char const* diffusePath, char const* specPath, float shine);
+	Plane(unsigned int diffTexture, unsigned int specTexture, float shine);
 	~Plane() {}
 
 protected:

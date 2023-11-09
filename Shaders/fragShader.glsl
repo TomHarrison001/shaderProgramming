@@ -33,7 +33,7 @@ struct pointLight {
     vec3 constants;
 };
 
-#define numPointLights 100
+#define numPointLights 5
 uniform pointLight pLight[numPointLights];
 
 struct spotLight {

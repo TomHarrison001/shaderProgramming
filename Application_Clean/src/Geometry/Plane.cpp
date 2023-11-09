@@ -2,7 +2,7 @@
 
 #include "Geometry/Plane.h"
 
-Plane::Plane(char const* diffusePath, char const* specPath, float shine) : Object(diffusePath, specPath, shine) {
+Plane::Plane(unsigned int diffTexture, unsigned int specTexture, float shine) : Object(diffTexture, specTexture, shine) {
 	setVertexData(vertexData);
 	setIndices(indices);
 	makeVAO();

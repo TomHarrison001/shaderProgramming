@@ -6,11 +6,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include "Shader.h"
-#include "Textures/TextureManager.h"
 
 class Object {
 public:
-	Object(char const* diffusePath, char const* specPath, float shine);
+	Object(unsigned int diffTexture, unsigned int specTexture, float shine);
 	~Object() {}
 	void setMaterialValues(Shader* shader);
 	void setTransform(Shader* shader) { shader->setMat4("Model", m_transform); }
@@ -28,7 +27,7 @@ public:
 protected:
 	void makeVAO();
 	unsigned int m_VBO, m_VAO, m_EBO;
-	unsigned int m_diffuseTexture, m_specularTexture;
+	unsigned int m_diffTexture, m_specTexture;
 	glm::mat4 m_transform;
 	float m_shine;
 	int m_strides = 8;

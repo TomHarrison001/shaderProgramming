@@ -4,7 +4,7 @@
 
 class Cube : public Object {
 public:
-	Cube(char const* diffusePath, char const* specPath, float shine);
+	Cube(unsigned int diffTexture, unsigned int specTexture, float shine);
 	~Cube() {}
 
 protected:
