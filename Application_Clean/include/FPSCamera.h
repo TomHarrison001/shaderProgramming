@@ -14,7 +14,7 @@ WSAD and mouse for rotate/zoom
 class FirstPersonCamera : public Camera {
 
 public:
-	FirstPersonCamera(glm::vec3 pos = glm::vec3(0.0f, 1.0f, 10.0f));
+	FirstPersonCamera(glm::vec3 pos = glm::vec3(0.0f, 2.0f, 5.0f));
 
 	glm::mat4 getViewMatrix()                                          override;
 	glm::mat4 getProjectionMatrix()                                    override;
