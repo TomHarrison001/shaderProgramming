@@ -17,16 +17,16 @@ public:
 private:
 	Shader* m_myShader;
 	DirectionalLight* m_directionalLight;
-	PointLight* m_pointLight;
 	std::vector<PointLight*> m_pointLights;
-	SpotLight* m_spotLight;
 	std::vector<SpotLight*> m_spotLights;
-	Object* m_object;
 	std::vector<Object*> m_objects;
 	std::vector<unsigned int> m_textures;
 	std::string m_path = "..\\Resources\\";
 	bool useNM = false;
 
 	void render();
+	void UpdateUniforms();
+	void UpdateSpotLight();
+	void DrawObject(Object* m_object);
 	glm::vec3 makeRandom(glm::vec3 lower, glm::vec3 upper);
 };

@@ -13,27 +13,20 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_directionalLight->setLightUniforms(m_myShader);
 	
 	/*for (int i = 0; i < 5; i++) {
-		m_pointLight = new PointLight(makeRandom(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 1.0, 1.0)), makeRandom(glm::vec3(-4.9, 0.1, -4.9), glm::vec3(4.9, 9.9, 4.9)), i);
-		m_pointLights.push_back(m_pointLight);
+		m_pointLights.push_back(new PointLight(makeRandom(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 1.0, 1.0)), makeRandom(glm::vec3(-4.9, 0.1, -4.9), glm::vec3(4.9, 9.9, 4.9))));
 	}*/
 	
-	m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 4.9));
-	m_pointLights.push_back(m_pointLight);
-	m_pointLight = new PointLight(glm::vec3(0.0, 1.0, 0.0), glm::vec3(4.9, 1.0, 0.0));
-	m_pointLights.push_back(m_pointLight);
-	m_pointLight = new PointLight(glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 1.0, -4.9));
-	m_pointLights.push_back(m_pointLight);
-	m_pointLight = new PointLight(glm::vec3(1.0, 1.0, 0.0), glm::vec3(-4.9, 1.0, 0.0));
-	m_pointLights.push_back(m_pointLight);
-	m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 1.0), glm::vec3(0.0, 1.0, 0.0));
-	m_pointLights.push_back(m_pointLight);
+	m_pointLights.push_back(new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 4.9)));
+	m_pointLights.push_back(new PointLight(glm::vec3(0.0, 1.0, 0.0), glm::vec3(4.9, 1.0, 0.0)));
+	m_pointLights.push_back(new PointLight(glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 1.0, -4.9)));
+	m_pointLights.push_back(new PointLight(glm::vec3(1.0, 1.0, 0.0), glm::vec3(-4.9, 1.0, 0.0)));
+	m_pointLights.push_back(new PointLight(glm::vec3(1.0, 0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)));
 
 	for (PointLight* m_pointLight : m_pointLights) {
 		m_pointLight->setLightUniforms(m_myShader);
 	}
 
-	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), m_camera->getFront(), glm::vec2(glm::cos(glm::radians(7.5f)), glm::cos(glm::radians(12.5f))));
-	m_spotLights.push_back(m_spotLight);
+	m_spotLights.push_back(new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), m_camera->getFront(), glm::vec2(glm::cos(glm::radians(7.5f)), glm::cos(glm::radians(12.5f)))));
 
 	for (SpotLight* m_spotLight : m_spotLights) {
 		m_spotLight->setLightUniforms(m_myShader);
@@ -44,30 +37,19 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 		m_textures.push_back(TextureManager::loadTexture((m_path + file).c_str()));
 	}
 
-	m_object = new Cube(m_textures[0], m_textures[1], m_textures[2]);
-	m_object->translate(glm::vec3(-2.0, 1.0, 0.0));
-	m_objects.push_back(m_object);
-	m_object = new Cube(m_textures[0], m_textures[1], m_textures[2]);
-	m_object->translate(glm::vec3(2.0, 1.0, 0.0));
-	m_objects.push_back(m_object);
-	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
-	m_objects.push_back(m_object);
-	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
-	m_object->rotate(glm::pi<float>() / 2, glm::vec3(1.0, 0.0, 0.0));
-	m_object->translate(glm::vec3(0.0, -5.0, -5.0));
-	m_objects.push_back(m_object);
-	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
-	m_object->rotate(glm::pi<float>() / 2, glm::vec3(-1.0, 0.0, 0.0));
-	m_object->translate(glm::vec3(0.0, -5.0, 5.0));
-	m_objects.push_back(m_object);
-	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
-	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, 1.0));
-	m_object->translate(glm::vec3(5.0, -5.0, 0.0));
-	m_objects.push_back(m_object);
-	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
-	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, -1.0));
-	m_object->translate(glm::vec3(-5.0, -5.0, 0.0));
-	m_objects.push_back(m_object);
+	for (int i = 0; i < 2; i++) {
+		m_objects.push_back(new Cube(m_textures[0], m_textures[1], m_textures[2]));
+		m_objects[i]->translate(glm::vec3(4.0 * i - 2.0, 1.0, 0.0));
+	}
+
+	for (int i = 0; i < 5; i++) {
+		m_objects.push_back(new Plane(m_textures[3], m_textures[4], m_textures[5]));
+		if (i == 0) continue;
+		std::vector<glm::vec3> r = { glm::vec3(1.0, 0.0, 0.0), glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 0.0, -1.0) };
+		m_objects[i + 2]->rotate(glm::pi<float>() / 2, r[i - 1]);
+		std::vector<glm::vec3> t = { glm::vec3(0.0, -5.0, -5.0), glm::vec3(0.0, -5.0, 5.0), glm::vec3(5.0, -5.0, 0.0), glm::vec3(-5.0, -5.0, 0.0) };
+		m_objects[i + 2]->translate(t[i - 1]);
+	}
 }
 MyScene::~MyScene() {
 	delete m_myShader;
@@ -91,25 +73,38 @@ void MyScene::update(float dt) {
 }
 void MyScene::render() {
 	m_myShader->use();
+	UpdateUniforms();
+	UpdateSpotLight();
+
+	// Rotate Second Cube
+	m_objects[1]->rotate((float)(glfwGetTime() / 1000.0f), glm::vec3(0.0, 1.0, 0.0));
+	
+	for (Object* m_object : m_objects) {
+		DrawObject(m_object);
+	}
+}
+
+void MyScene::UpdateUniforms() {
 	m_myShader->setMat4("Projection", m_camera->getProjectionMatrix());
 	m_myShader->setMat4("View", m_camera->getViewMatrix());
 	m_myShader->setVec3("viewPos", m_camera->getPosition());
 	m_myShader->setBool("useNM", useNM);
+}
 
-	m_spotLight = m_spotLights.front();
+void MyScene::UpdateSpotLight() {
+	SpotLight* m_spotLight = m_spotLights[0];
 	m_spotLight->setPosition(m_camera->getPosition());
 	m_spotLight->setDirection(m_camera->getFront());
 	m_spotLight->setLightUniforms(m_myShader);
-
-	m_objects[1]->rotate((float)(glfwGetTime() / 1000.0f), glm::vec3(0.0, 1.0, 0.0));
-	
-	for (Object* m_object : m_objects) {
-		m_object->setMaterialValues(m_myShader);
-		glBindVertexArray(m_object->getVAO());
-		m_object->setTransform(m_myShader);
-		glDrawElements(GL_TRIANGLES, m_object->getIndicesCount(), GL_UNSIGNED_INT, 0);
-	}
 }
+
+void MyScene::DrawObject(Object* m_object) {
+	m_object->setMaterialValues(m_myShader);
+	glBindVertexArray(m_object->getVAO());
+	m_object->setTransform(m_myShader);
+	glDrawElements(GL_TRIANGLES, m_object->getIndicesCount(), GL_UNSIGNED_INT, 0);
+}
+
 glm::vec3 MyScene::makeRandom(glm::vec3 lower, glm::vec3 upper) {
 	std::random_device rd;
 	std::mt19937 gen(rd());
