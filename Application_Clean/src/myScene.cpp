@@ -38,23 +38,26 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_planeNormTexture = TextureManager::loadTexture("..\\Resources\\normalFloor.jpg");
 
 	m_object = new Cube(m_cubeDiffTexture, m_cubeSpecTexture, m_cubeNormTexture, 0.9);
-	m_object->translate(glm::vec3(0.0, 1.0, 0.0));
+	m_object->translate(glm::vec3(-2.0, 1.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.5);
+	m_object = new Cube(m_cubeDiffTexture, m_cubeSpecTexture, m_cubeNormTexture, 0.9);
+	m_object->translate(glm::vec3(2.0, 1.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.01);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
+	m_objects.push_back(m_object);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(1.0, 0.0, 0.0));
 	m_object->translate(glm::vec3(0.0, -5.0, -5.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.01);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(-1.0, 0.0, 0.0));
 	m_object->translate(glm::vec3(0.0, -5.0, 5.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.01);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, 1.0));
 	m_object->translate(glm::vec3(5.0, -5.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.01);
+	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture, 0.9);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, -1.0));
 	m_object->translate(glm::vec3(-5.0, -5.0, 0.0));
 	m_objects.push_back(m_object);
@@ -91,6 +94,8 @@ void MyScene::render() {
 	m_spotLight->setDirection(m_camera->getFront());
 	m_spotLight->setLightUniforms(m_myShader);
 
+	m_objects[1]->rotate((float)(glfwGetTime() / 1000.0f), glm::vec3(0.0, 1.0, 0.0));
+	
 	for (Object* m_object : m_objects) {
 		m_object->setMaterialValues(m_myShader);
 		glBindVertexArray(m_object->getVAO());
