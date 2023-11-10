@@ -4,7 +4,7 @@
 
 class Plane : public Object {
 public:
-	Plane(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture, float shine);
+	Plane(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture);
 	~Plane() {}
 
 protected:

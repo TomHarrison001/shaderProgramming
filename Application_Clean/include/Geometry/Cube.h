@@ -4,7 +4,7 @@
 
 class Cube : public Object {
 public:
-	Cube(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture, float shine);
+	Cube(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture);
 	~Cube() {}
 
 protected:

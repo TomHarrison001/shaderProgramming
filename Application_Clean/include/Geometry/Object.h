@@ -9,7 +9,7 @@
 
 class Object {
 public:
-	Object(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture, float shine);
+	Object(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture, float shine = 0.9);
 	~Object() {}
 	void setMaterialValues(Shader* shader);
 	void setTransform(Shader* shader) { shader->setMat4("Model", m_transform); }
