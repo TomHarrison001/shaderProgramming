@@ -2,8 +2,10 @@
 
 #include "Geometry/Object.h"
 
+// Constructor takes in textures (loaded in myScene.cpp) and shine (default to 0.9)
 Object::Object(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture, float shine) : 
 	m_diffTexture(diffTexture), m_specTexture(specTexture), m_normTexture(normTexture), m_shine(shine) {}
+// sets uniforms in the fragment shader for object attributes
 void Object::setMaterialValues(Shader* shader) {
 	shader->use();
 	shader->setFloat("shine", m_shine);
@@ -16,14 +18,19 @@ void Object::setMaterialValues(Shader* shader) {
 	glBindTextureUnit(2, m_normTexture);
 }
 void Object::makeVAO() {
-	glCreateBuffers(1, &m_VBO);  // Create VBO (Vertex Buffer Object - unsigned ints storing texture, mesh, shader)
-	glNamedBufferStorage(m_VBO, sizeof(float) * vertexData.size(), vertexData.data(), GL_DYNAMIC_STORAGE_BIT);  // Creates and initialises a buffer object's immutable data store
+	// Create VBO (Vertex Buffer Object - unsigned ints storing texture, mesh, shader)
+	glCreateBuffers(1, &m_VBO);
+	// Creates and initialises a buffer object's immutable data store
+	glNamedBufferStorage(m_VBO, sizeof(float) * vertexData.size(), vertexData.data(), GL_DYNAMIC_STORAGE_BIT);
 
-	glCreateBuffers(1, &m_EBO);  // Create Element Buffer
+	// Create Element Buffer
+	glCreateBuffers(1, &m_EBO);
 	glNamedBufferStorage(m_EBO, sizeof(unsigned int) * indices.size(), indices.data(), GL_DYNAMIC_STORAGE_BIT);
 
-	glCreateVertexArrays(1, &m_VAO);  // Creates VAO (Vertex Array Object - stores VBOs)
-	glVertexArrayVertexBuffer(m_VAO, 0, m_VBO, 0, sizeof(float) * m_strides);  // Binds a buffer to a vertex buffer bind point (stride: 6)
+	// Creates VAO (Vertex Array Object - stores VBOs)
+	glCreateVertexArrays(1, &m_VAO);
+	// Binds a buffer to a vertex buffer bind point
+	glVertexArrayVertexBuffer(m_VAO, 0, m_VBO, 0, sizeof(float) * m_strides);
 	glVertexArrayElementBuffer(m_VAO, m_EBO);
     
 	for (int i = 0; i < 4; i++) {

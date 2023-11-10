@@ -8,24 +8,23 @@ in mat3 TBN;
 
 uniform vec3 viewPos;
 
-// Material Uniforms
+// material uniforms and variables
 uniform sampler2D diffuseMap;
+vec3 objColour = texture(diffuseMap, uv).rgb;
 uniform sampler2D specularMap;
+float specStrength = texture(specularMap, uv).r;
 uniform sampler2D normalMap;
+vec3 n = normalize(normal);
+vec3 viewDir = normalize(viewPos - posInWS);
 uniform float shine;
+uniform bool useDir, usePoint, useSpot, useNM;
 
-// Directional Light Uniforms
+// directional light uniforms
 uniform vec3 lightColour;
 uniform vec3 lightDirection;
 uniform float ambientFactor;
 
-vec3 n = normalize(normal);
-vec3 viewDir = normalize(viewPos - posInWS);
-vec3 objColour = texture(diffuseMap, uv).rgb;
-float specStrength = texture(specularMap, uv).r;
-uniform bool useDir, usePoint, useSpot, useNM;
-
-// Calculation Functions
+// calculation functions
 vec3 calculateAmbient(vec3 lColour);
 vec3 calculateDiffuse(vec3 lColour, vec3 lDir);
 vec3 calculateSpecular(vec3 lColour, vec3 lDir);

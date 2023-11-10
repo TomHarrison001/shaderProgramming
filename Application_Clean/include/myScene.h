@@ -16,12 +16,16 @@ public:
 	void update(float dt) override;
 private:
 	Shader* m_myShader;
+	// var for directional light
 	DirectionalLight* m_directionalLight;
+	// vectors for point and spot lights, objects and textures
 	std::vector<PointLight*> m_pointLights;
 	std::vector<SpotLight*> m_spotLights;
 	std::vector<Object*> m_objects;
 	std::vector<unsigned int> m_textures;
+	// path of resource files (textures)
 	std::string m_path = "..\\Resources\\";
+	// toggles for directional, point and spot lights and normal mapping
 	bool useDir, usePoint, useSpot, useNM;
 
 	void render();

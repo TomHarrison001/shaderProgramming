@@ -21,6 +21,7 @@ public:
 	glm::mat4& getModelMatrix() { return m_transform; }
 	unsigned int getIndicesCount() { return indices.size(); }
 
+	// object transformation methods
 	void translate(glm::vec3 translation) { m_transform = glm::translate(m_transform, translation); }
 	void rotate(float angle, glm::vec3 axis) { m_transform = glm::rotate(m_transform, angle, axis); }
 	void scale(float scaleFactor, glm::vec3 axis) { m_transform = glm::scale(m_transform, scaleFactor * axis); }
