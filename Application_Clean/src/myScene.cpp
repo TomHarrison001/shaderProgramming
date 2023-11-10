@@ -9,20 +9,28 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 
 	m_directionalLight = new DirectionalLight(glm::vec3(1.0, 1.0, 1.0), glm::vec3(0.0, -1.0, 0.0));
 	m_directionalLight->setLightUniforms(m_myShader);
-
-	//m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0, 0.22, 0.02), 0);
-	//m_pointLights.push_back(m_pointLight);
 	
-	for (int i = 0; i < 100; i++) {
-		m_pointLight = new PointLight(makeRandom(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 1.0, 1.0)), makeRandom(glm::vec3(-4.9, 1.0, -4.9), glm::vec3(4.9, 9.9, 4.9)), glm::vec3(1.0, 0.3, 0.9), i);
+	/*for (int i = 0; i < 5; i++) {
+		m_pointLight = new PointLight(makeRandom(glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.0, 1.0, 1.0)), makeRandom(glm::vec3(-4.9, 0.1, -4.9), glm::vec3(4.9, 9.9, 4.9)), i);
 		m_pointLights.push_back(m_pointLight);
-	}
+	}*/
+	
+	m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 4.9));
+	m_pointLights.push_back(m_pointLight);
+	m_pointLight = new PointLight(glm::vec3(0.0, 1.0, 0.0), glm::vec3(4.9, 1.0, 0.0));
+	m_pointLights.push_back(m_pointLight);
+	m_pointLight = new PointLight(glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 1.0, -4.9));
+	m_pointLights.push_back(m_pointLight);
+	m_pointLight = new PointLight(glm::vec3(1.0, 1.0, 0.0), glm::vec3(-4.9, 1.0, 0.0));
+	m_pointLights.push_back(m_pointLight);
+	m_pointLight = new PointLight(glm::vec3(1.0, 0.0, 1.0), glm::vec3(0.0, 1.0, 0.0));
+	m_pointLights.push_back(m_pointLight);
 
 	for (PointLight* m_pointLight : m_pointLights) {
 		m_pointLight->setLightUniforms(m_myShader);
 	}
 
-	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), glm::vec3(1.0, 0.027, 0.0028), 0, m_camera->getFront(), glm::vec2(glm::cos(glm::radians(7.5f)), glm::cos(glm::radians(12.5f))));
+	m_spotLight = new SpotLight(glm::vec3(1.0, 1.0, 1.0), m_camera->getPosition(), m_camera->getFront(), glm::vec2(glm::cos(glm::radians(7.5f)), glm::cos(glm::radians(12.5f))));
 	m_spotLights.push_back(m_spotLight);
 
 	for (SpotLight* m_spotLight : m_spotLights) {
