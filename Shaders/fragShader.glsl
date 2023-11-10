@@ -25,6 +25,13 @@ vec3 objColour = texture(diffuseMap, uv).rgb;
 float specStrength = texture(specularMap, uv).r;
 uniform bool useDir, usePoint, useSpot, useNM;
 
+// Calculation Functions
+vec3 calculateAmbient(vec3 lColour);
+vec3 calculateDiffuse(vec3 lColour, vec3 lDir);
+vec3 calculateSpecular(vec3 lColour, vec3 lDir);
+float calculateAttenuation(vec3 lPos, vec3 lConstants);
+float calculateIntensity(vec3 vDir, vec3 lDir, vec2 lRadii);
+
 vec3 getDirectionalLight();
 vec3 getPointLight(int i);
 vec3 getSpotLight(int i);
@@ -58,15 +65,11 @@ void main() {
     }
     vec3 result = vec3(0.0);
     if (useDir) result += getDirectionalLight();
-    if (usePoint) {
-        for (int i = 0; i < numPointLights; i++) {
-            result += getPointLight(i);
-        }
+    for (int i = (usePoint) ? 0 : numPointLights; i < numPointLights; i++) {
+        result += getPointLight(i);
     }
-    if (useSpot) {
-        for (int i = 0; i < numSpotLights; i++) {
-            result += getSpotLight(i);
-        }
+    for (int i = (useSpot) ? 0 : numSpotLights; i < numSpotLights; i++) {
+        result += getSpotLight(i);
     }
     result = toneMapping(result);
     FragColour = vec4(result, 1.0);
@@ -74,42 +77,30 @@ void main() {
 
 vec3 getDirectionalLight() {
     // ambient
-    vec3 ambient = objColour * lightColour * ambientFactor;
+    vec3 ambient = calculateAmbient(lightColour);
 
     // diffuse
-    float diffuseFactor = dot(n, -lightDirection);
-    diffuseFactor = max(diffuseFactor, 0.0f);
-    vec3 diffuse = objColour * lightColour * diffuseFactor;
+    vec3 diffuse = calculateDiffuse(lightColour, -lightDirection);
 
     // Blinn Phong specular
-    vec3 H = normalize(-lightDirection + viewDir);
-    float specLevel = dot(n, H);
-    specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, shine);
-    vec3 specular = lightColour * specLevel * specStrength;
+    vec3 specular = calculateSpecular(lightColour, -lightDirection);
 
     return ambient + diffuse + specular;
 }
 
 vec3 getPointLight(int i) {
-    float distance = length(pLight[i].position - posInWS);
-    float attn = 1.0 / (pLight[i].constants.x + pLight[i].constants.y * distance + pLight[i].constants.z * distance * distance);
+    // attenuation
+    float attn = calculateAttenuation(pLight[i].position, pLight[i].constants);
     vec3 lightDir = normalize(pLight[i].position - posInWS);
 
     // ambient
-    vec3 ambient = objColour * pLight[i].colour * ambientFactor;
+    vec3 ambient = calculateAmbient(pLight[i].colour);
     
     // diffuse
-    float diffuseFactor = dot(n, lightDir);
-    diffuseFactor = max(diffuseFactor, 0.0f);
-    vec3 diffuse = objColour * pLight[i].colour * diffuseFactor;
+    vec3 diffuse = calculateDiffuse(pLight[i].colour, lightDir);
 
     // Blinn Phong specular
-    vec3 H = normalize(lightDir + viewDir);
-    float specLevel = dot(n, H);
-    specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, shine);
-    vec3 specular = pLight[i].colour * specLevel * specStrength;
+    vec3 specular = calculateSpecular(pLight[i].colour, lightDir);
 
     ambient *= attn;
     diffuse *= attn;
@@ -119,33 +110,25 @@ vec3 getPointLight(int i) {
 }
 
 vec3 getSpotLight(int i) {
-    float distance = length(sLight[i].position - posInWS);
-    float attn = 1.0 / (sLight[i].constants.x + sLight[i].constants.y * distance + sLight[i].constants.z * distance * distance);
+    // attenuation
+    float attn = calculateAttenuation(sLight[i].position, sLight[i].constants);
     vec3 lightDir = normalize(sLight[i].position - posInWS);
 
     // ambient
-    vec3 ambient = objColour * sLight[i].colour * ambientFactor;
+    vec3 ambient = calculateAmbient(sLight[i].colour);
     
     // diffuse
-    float diffuseFactor = dot(n, lightDir);
-    diffuseFactor = max(diffuseFactor, 0.0f);
-    vec3 diffuse = objColour * sLight[i].colour * diffuseFactor;
+    vec3 diffuse = calculateDiffuse(sLight[i].colour, lightDir);
 
     // Blinn Phong specular
-    vec3 H = normalize(viewDir + lightDir);
-    float specLevel = dot(n, H);
-    specLevel = max(specLevel, 0.0);
-    specLevel = pow(specLevel, shine);
-    vec3 specular = sLight[i].colour * specLevel * specStrength;
+    vec3 specular = calculateSpecular(sLight[i].colour, lightDir);
     
     ambient *= attn;
     diffuse *= attn;
     specular *= attn;
 
-    float theta = dot(-lightDir, normalize(sLight[i].direction));
-    float denom = sLight[i].radii.x - sLight[i].radii.y;
-    float intensity = (theta - sLight[i].radii.y) / denom;
-    intensity = clamp(intensity, 0.0, 1.0);
+    // intensity
+    float intensity = calculateIntensity(-lightDir, normalize(sLight[i].direction), sLight[i].radii);
     
     ambient *= intensity;
     diffuse *= intensity;
@@ -159,4 +142,36 @@ vec3 toneMapping(vec3 x) {
     return clamp((x * (a * x + b)) / (x * (c * a + d) + e), 0.0, 1.0);
     // const float a = 0.15, b = 0.50, c = 0.10, d = 0.20, e = 0.02, f = 0.30;
     // return clamp((x * (a * x + c * b)) / (x * (a * x + b) + d * f) - e / f, 0.0, 1.0);
+}
+
+vec3 calculateAmbient(vec3 lColour) {
+    return objColour * lColour * ambientFactor;
+}
+
+vec3 calculateDiffuse(vec3 lColour, vec3 lDir) {
+    float diffuseFactor = dot(n, lDir);
+    diffuseFactor = max(diffuseFactor, 0.0f);
+    vec3 diffuse = objColour * lColour * diffuseFactor;
+    return diffuse;
+}
+
+vec3 calculateSpecular(vec3 lColour, vec3 lDir) {
+    vec3 H = normalize(lDir + viewDir);
+    float specLevel = dot(n, H);
+    specLevel = max(specLevel, 0.0);
+    specLevel = pow(specLevel, shine);
+    vec3 specular = lColour * specLevel * specStrength;
+    return specular;
+}
+
+float calculateAttenuation(vec3 lPos, vec3 lConstants) {
+    float distance = length(lPos - posInWS);
+    return 1.0 / (lConstants.x + lConstants.y * distance + lConstants.z * distance * distance);
+}
+
+float calculateIntensity(vec3 vDir, vec3 lDir, vec2 lRadii) {
+    float theta = dot(vDir, lDir);
+    float denom = lRadii.x - lRadii.y;
+    float intensity = (theta - lRadii.y) / denom;
+    return clamp(intensity, 0.0, 1.0);
 }
