@@ -22,7 +22,7 @@ private:
 	std::vector<Object*> m_objects;
 	std::vector<unsigned int> m_textures;
 	std::string m_path = "..\\Resources\\";
-	bool useNM = false;
+	bool useDir, usePoint, useSpot, useNM;
 
 	void render();
 	void UpdateUniforms();

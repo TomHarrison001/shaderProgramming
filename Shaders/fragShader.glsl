@@ -23,7 +23,7 @@ vec3 n = normalize(normal);
 vec3 viewDir = normalize(viewPos - posInWS);
 vec3 objColour = texture(diffuseMap, uv).rgb;
 float specStrength = texture(specularMap, uv).r;
-uniform bool useNM;
+uniform bool useDir, usePoint, useSpot, useNM;
 
 vec3 getDirectionalLight();
 vec3 getPointLight(int i);
@@ -56,12 +56,17 @@ void main() {
         n = n * 2.0 - 1.0;
         n = normalize(TBN * n);
     }
-    vec3 result = getDirectionalLight();
-    for (int i = 0; i < numPointLights; i++) {
-        result += getPointLight(i);
+    vec3 result = vec3(0.0);
+    if (useDir) result += getDirectionalLight();
+    if (usePoint) {
+        for (int i = 0; i < numPointLights; i++) {
+            result += getPointLight(i);
+        }
     }
-    for (int i = 0; i < numSpotLights; i++) {
-        result += getSpotLight(i);
+    if (useSpot) {
+        for (int i = 0; i < numSpotLights; i++) {
+            result += getSpotLight(i);
+        }
     }
     result = toneMapping(result);
     FragColour = vec4(result, 1.0);

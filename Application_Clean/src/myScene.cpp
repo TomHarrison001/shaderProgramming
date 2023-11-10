@@ -82,12 +82,21 @@ void MyScene::render() {
 	for (Object* m_object : m_objects) {
 		DrawObject(m_object);
 	}
+
+	// Toggles for Directional(1), Point(2), Spot(3) Lights and Normal Mapping(4)
+	useDir = !m_handler->isKeyPressed(GLFW_KEY_1);
+	usePoint = !m_handler->isKeyPressed(GLFW_KEY_2);
+	useSpot = !m_handler->isKeyPressed(GLFW_KEY_3);
+	useNM = !m_handler->isKeyPressed(GLFW_KEY_4);
 }
 
 void MyScene::UpdateUniforms() {
 	m_myShader->setMat4("Projection", m_camera->getProjectionMatrix());
 	m_myShader->setMat4("View", m_camera->getViewMatrix());
 	m_myShader->setVec3("viewPos", m_camera->getPosition());
+	m_myShader->setBool("useDir", useDir);
+	m_myShader->setBool("usePoint", usePoint);
+	m_myShader->setBool("useSpot", useSpot);
 	m_myShader->setBool("useNM", useNM);
 }
 
