@@ -1,6 +1,8 @@
 #pragma once
-#include "MyScene.h"
+
+#include <iostream>
 #include <random>
+#include "MyScene.h"
 
 MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	m_camera = new FirstPersonCamera();
@@ -38,34 +40,31 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	}
 
 	// Load Textures Once
-	m_cubeDiffTexture = TextureManager::loadTexture("..\\Resources\\diffuseCube.jpg");
-	m_cubeSpecTexture = TextureManager::loadTexture("..\\Resources\\specularCube.jpg");
-	m_cubeNormTexture = TextureManager::loadTexture("..\\Resources\\normalCube.jpg");
-	m_planeDiffTexture = TextureManager::loadTexture("..\\Resources\\diffuseFloor.jpg");
-	m_planeSpecTexture = TextureManager::loadTexture("..\\Resources\\specularFloor.jpg");
-	m_planeNormTexture = TextureManager::loadTexture("..\\Resources\\normalFloor.jpg");
+	for (char const* file : { "diffuseCube.jpg", "specularCube.jpg", "normalCube.jpg", "diffuseFloor.jpg", "specularFloor.jpg", "normalFloor.jpg" }) {
+		m_textures.push_back(TextureManager::loadTexture((m_path + file).c_str()));
+	}
 
-	m_object = new Cube(m_cubeDiffTexture, m_cubeSpecTexture, m_cubeNormTexture);
+	m_object = new Cube(m_textures[0], m_textures[1], m_textures[2]);
 	m_object->translate(glm::vec3(-2.0, 1.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Cube(m_cubeDiffTexture, m_cubeSpecTexture, m_cubeNormTexture);
+	m_object = new Cube(m_textures[0], m_textures[1], m_textures[2]);
 	m_object->translate(glm::vec3(2.0, 1.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture);
+	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture);
+	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(1.0, 0.0, 0.0));
 	m_object->translate(glm::vec3(0.0, -5.0, -5.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture);
+	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(-1.0, 0.0, 0.0));
 	m_object->translate(glm::vec3(0.0, -5.0, 5.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture);
+	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, 1.0));
 	m_object->translate(glm::vec3(5.0, -5.0, 0.0));
 	m_objects.push_back(m_object);
-	m_object = new Plane(m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture);
+	m_object = new Plane(m_textures[3], m_textures[4], m_textures[5]);
 	m_object->rotate(glm::pi<float>() / 2, glm::vec3(0.0, 0.0, -1.0));
 	m_object->translate(glm::vec3(-5.0, -5.0, 0.0));
 	m_objects.push_back(m_object);

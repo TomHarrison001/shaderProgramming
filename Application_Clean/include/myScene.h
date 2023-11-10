@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Scene.h"
 #include "Shader.h"
 #include "Lights/DirectionalLight.h"
@@ -22,8 +23,8 @@ private:
 	std::vector<SpotLight*> m_spotLights;
 	Object* m_object;
 	std::vector<Object*> m_objects;
-	unsigned int m_cubeDiffTexture, m_cubeSpecTexture, m_cubeNormTexture;
-	unsigned int m_planeDiffTexture, m_planeSpecTexture, m_planeNormTexture;
+	std::vector<unsigned int> m_textures;
+	std::string m_path = "..\\Resources\\";
 	bool useNM = false;
 
 	void render();

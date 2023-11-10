@@ -1,12 +1,9 @@
 #pragma once
 
 #include "Geometry/Object.h"
-#include <iostream>
 
 Object::Object(unsigned int diffTexture, unsigned int specTexture, unsigned int normTexture, float shine) : 
-	m_diffTexture(diffTexture), m_specTexture(specTexture), m_normTexture(normTexture), m_shine(shine) {
-	std::cout << shine << std::endl;
-}
+	m_diffTexture(diffTexture), m_specTexture(specTexture), m_normTexture(normTexture), m_shine(shine) {}
 void Object::setMaterialValues(Shader* shader) {
 	shader->use();
 	shader->setFloat("shine", m_shine);
