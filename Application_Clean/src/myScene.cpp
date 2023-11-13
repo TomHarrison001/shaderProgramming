@@ -38,9 +38,10 @@ MyScene::MyScene(GLFWwindow* window, InputHandler* H) : Scene(window, H) {
 	}
 
 	// creates 2 cubes
+	m_cubePos = glm::vec3(-2.0, 1.0, 0.0);
 	for (int i = 0; i < 2; i++) {
 		m_objects.push_back(new Cube(m_textures[0], m_textures[1], m_textures[2]));
-		m_objects[i]->translate(glm::vec3(4.0 * i - 2.0, 1.0, 0.0));
+		m_objects[i]->translate(glm::vec3(4.0 * i - 2.0, 1.0 * i + 1.0, 0.0));
 	}
 
 	// creates 5 planes for walls and floor
@@ -75,6 +76,24 @@ void MyScene::render() {
 	m_myShader->use();
 	UpdateUniforms();
 	UpdateSpotLight();
+
+	// cube movement
+	if (m_handler->isKeyPressed(GLFW_KEY_UP) && m_cubePos.z > -4.5) {
+		m_cubePos.z -= 0.05f;
+		m_objects[0]->translate(glm::vec3(0.0, 0.0, -0.05));
+	}
+	else if (m_handler->isKeyPressed(GLFW_KEY_DOWN) && m_cubePos.z < 4.5) {
+		m_cubePos.z += 0.05f;
+		m_objects[0]->translate(glm::vec3(0.0, 0.0, 0.05));
+	}
+	if (m_handler->isKeyPressed(GLFW_KEY_LEFT) && m_cubePos.x > -4.5) {
+		m_cubePos.x -= 0.05f;
+		m_objects[0]->translate(glm::vec3(-0.05, 0.0, 0.0));
+	}
+	else if (m_handler->isKeyPressed(GLFW_KEY_RIGHT) && m_cubePos.x < 4.5) {
+		m_cubePos.x += 0.05f;
+		m_objects[0]->translate(glm::vec3(0.05, 0.0, 0.0));
+	}
 
 	// day-night cycle
 	glm::vec3 newDir = glm::vec3((float)sin(glfwGetTime()) * 3.0, (float)cos(glfwGetTime()) * 3.0, 0.0);

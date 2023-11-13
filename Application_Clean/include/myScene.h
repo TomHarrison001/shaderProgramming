@@ -27,6 +27,8 @@ private:
 	std::string m_path = "..\\Resources\\";
 	// toggles for directional, point and spot lights and normal mapping
 	bool useDir, usePoint, useSpot, useNM;
+	// cube movement
+	glm::vec3 m_cubePos;
 
 	void render();
 	void UpdateUniforms();
