@@ -76,6 +76,11 @@ void MyScene::render() {
 	UpdateUniforms();
 	UpdateSpotLight();
 
+	// day-night cycle
+	glm::vec3 newDir = glm::vec3((float)sin(glfwGetTime()) * 3.0, (float)cos(glfwGetTime()) * 3.0, 0.0);
+	m_directionalLight->setDirection(newDir);
+	m_directionalLight->setLightUniforms(m_myShader);
+
 	// rotate Second Cube
 	m_objects[1]->rotate((float)(glfwGetTime() / 1000.0f), glm::vec3(0.0, 1.0, 0.0));
 	
